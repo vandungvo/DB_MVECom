@@ -56,6 +56,9 @@ Trang localhost:3000 sẽ khởi chạy tự động trên trình duyệt mặc 
 - React - Arrow function, Hooks (useState, useEffect)
 - Axios - Promised based. (https://www.youtube.com/watch?v=_zeOSnVHI2I)
 - Route
+- github
+    - Đầu tiên, ta git clone https://github.com/vandungvo/DB_MVECom.git 
+    - Sau đó, khi ta thay đổi code, ta muốn push lên remote repository, git add ., git commit -m "...", git pull origin master, git push origin master.
 - Referencial link: https://www.youtube.com/playlist?list=PL_-VfJajZj0W8-gf0g3YCCyFh-pVFMOgy
 ### Các lưu ý
 - File database này hiện chỉ có 1 table là user có dữ liệu. Vui lòng thêm các table khác liên quan đến module mà các bạn làm, cũng như thêm dữ liệu vào khi làm.
