@@ -12,7 +12,7 @@ export default function Navbar(props) {
         <nav className="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">
-                    HCMUT_SPSS
+                    HCMUT_Ecommerce
                 </Link>
                 <button
                     className="navbar-toggler"
