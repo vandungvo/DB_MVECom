@@ -57,7 +57,13 @@ Trang localhost:3000 sẽ khởi chạy tự động trên trình duyệt mặc 
 - Axios - Promised based. (https://www.youtube.com/watch?v=_zeOSnVHI2I)
 - Route
 - github
-    - Đầu tiên, ta git clone https://github.com/vandungvo/DB_MVECom.git 
+    - Đầu tiên, mở folder để chứa project (Example: Desktop, Database) 
+        - git clone https://github.com/vandungvo/DB_MVECom.git 
+        - npm install
+        - cd views
+        - npm install
+        - cd ..
+        - npm run dev
     - Sau đó, khi ta thay đổi code, ta muốn push lên remote repository
         - git add .
         - git commit -m "..."
