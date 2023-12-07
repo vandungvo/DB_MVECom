@@ -15,13 +15,29 @@ function SignIn() {
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(null);
     const navigate = useNavigate();
-    // const [login, setLogin] = useState(false);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post("/api/signin", { email, password })
+        axios.post("/api/signin", { 
+            email, 
+            password 
+        })
         .then((response) => {
-            cookies.set("TOKEN", response.data.token, { path: "/" });
-            navigate("/publicTest");
+            cookies.set("TOKEN", response.data.token, { 
+                path: "/" 
+            });
+            setTimeout(() => {
+                window.location.reload();
+            }, 100);
+            if (response.data.member.user_type == "Customer") {
+                navigate("/publicTest")
+            }
+            else if (response.data.member.user_type == "Seller") {
+                navigate("/manageProduct");
+            }
+            else {
+                navigate("/wip");
+            }
         })
         .catch((error) => {
             if (error.response) {
