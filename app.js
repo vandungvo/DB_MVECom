@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser'); // parse cookies from HTTP requests
 
 const homepageRoute = require('./routes/homepage'); // handles requests for the homepage
 const signinRoute = require('./routes/signin');
+const authorizationRoute = require("./routes/authorization");
 const protectedTestRoute = require("./routes/protected_test");
 const registrationRoute = require("./routes/registration");
 const publicTestRoute = require("./routes/public_test");
@@ -45,6 +46,8 @@ app.use(session({
 app.use("/api/homepage", homepageRoute); // associate homepageRoute with the /api/homepage path
 
 app.use("/api/signin", signinRoute);
+
+app.use("/api/authorization", authorizationRoute);
 
 app.use("/api/protectedTest", protectedTestRoute);
 

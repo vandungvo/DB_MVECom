@@ -1,13 +1,13 @@
 var connect_DB = require('./connect_db');
 
-const getAllProducts = (callback) => {
-    const query = "CALL GetAllProducts()";
+const getAllProducts = (shop_id, controller) => {
+    const query = `CALL GetAllProducts(${shop_id})`;
     connect_DB.query(query, (err, result) => {
         if (err) {
             console.error(err);
-            callback(err, null);
+            controller(err, null);
         } else { 
-            callback(null, result[0]);
+            controller(null, result[0]);
         }
     });
 }

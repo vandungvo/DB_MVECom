@@ -1,8 +1,9 @@
 const product_model = require('../model/DAO/product');
-// const seller_model = require('../model/DAO/seller');
+const authorization_model = require('../model/DAO/authorization');
 
 const viewProduct = (req, res) => {
-    product_model.getAllProducts((err, products) => {
+    let shop_id = req.body.shop_id;
+    product_model.getAllProducts(shop_id, function (err, products) {
         if (err) {
             console.error(err);
             res.status(500).send('Internal Server Error');

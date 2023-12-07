@@ -9,11 +9,11 @@ import axios from 'axios'
 import { useState, useEffect } from "react";
 import Header from '../shared/header';
 import Cookies from "universal-cookie";
-import { useParams } from 'react-router-dom';
 
 const cookies = new Cookies();
 
 function ManageProduct() {
+    const shop_id = cookies.get("SHOP_ID") || null;
     const [reFresh, setReFresh] = useState(0);
     const [products, setProducts] = useState([]);
     const [addPopup, setAddPopup] = useState(false);
@@ -23,7 +23,9 @@ function ManageProduct() {
     const [max_file_size, setMaxFileSize] = useState('');
 
     useEffect(() => {
-        axios.post('/api/viewProduct')
+        axios.post('/api/viewProduct', {
+            shop_id
+        })
         .then(response => {
             console.log(response.data); setProducts(response.data)
         })
@@ -88,7 +90,6 @@ function ManageProduct() {
                 <thead>
                     <tr>
                         <th className='text-center'>Product</th>
-                        <th className='text-center'>Shop</th>
                         <th className='text-center'>Category</th>
                         <th className='text-center'>Name</th>
                         <th className='text-center'>Stock</th>
@@ -103,8 +104,7 @@ function ManageProduct() {
                     {products.map(product => (
                         <tr key={product.product_id}>
                             <td className='text-center'>{product.product_id}</td>
-                            <td className='text-center'>{product.shop_id}</td>
-                            <td className='text-center'>{product.ctg_id}</td>
+                            <td className='text-center'>{product.ctg_name}</td>
                             <td className='text-center'>{product.name}</td>
                             <td className='text-center'>{product.stock}</td>
                             <td className='text-center'>{product.price}</td>
