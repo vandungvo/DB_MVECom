@@ -8,11 +8,10 @@ Link (chỉ đọc): https://www.overleaf.com/read/fkyzmchjqydn#c3e7f6
 
 ## Setup ngay sau khi clone project lần đầu
 ### Setup cơ sở dữ liệu MySQL và khởi chạy server MySQL trên máy
-- Các bạn có thể cài trực tiếp ứng dụng MySQL lên máy, hoặc cài đặt ứng dụng tổng hợp XAMPP tại [đây](https://www.apachefriends.org/download.html). Code được viết để chạy trên XAMPP. 
-- Nếu dùng MySQL, thì vào file `connect_db.js` để thay đổi mật khẩu.
-- Nếu dùng XAMPP, cài đặt xong thì vui lòng run as administrator ứng dụng, khi cửa sổ bật ra thì bấm nút Start ở dòng MySQL và Apache. Sau đó vào trình duyệt bất kỳ trên máy, nhập localhost rồi enter. Trang Welcome sẽ hiện ra.
-- Trên thanh điều hướng, nhấn vào mục `phpMyAdmin`. Trang quản lý sẽ hiện ra, và trên thanh điều hướng mới lúc này sẽ có nút Import hoặc nhập. Bấm vào đó, khi trang hiện lên sẽ thấy khung chọn tệp. Chọn tệp `e_commerce.sql` rồi bấm nhập. Sau khi xong, để ý dashboard bên trái màn hình, cái list với mấy cái icon hình trụ ấy, nếu thấy một dòng tên `e_commerce` xuất hiện nghĩa là file database đã nhập thành công. Có thể nhấp vào dòng đó để bắt đầu xem trong cái database đó có gì.
-- Mỗi khi kiểm tra thấy repo có cập nhật, nên drop cái database cũ, rồi import lại file `e_commerce.sql` hiện tại trong project vì có thể có những thay đổi trên DB. Các bạn khi làm xong nếu có đổi gì trong database cũng export file sql mới rồi bỏ vào repo này để người sau còn cập nhật theo.
+- Các bạn cài trực tiếp ứng dụng MySQL lên máy.
+- Đầu tiên cài MySQL Community Server (https://dev.mysql.com/downloads/mysql/)
+- Cài MySQL WorkBench để thuận tiện thao tác (https://dev.mysql.com/downloads/workbench/)
+- Sau khi cài xong, chạy file `e_commerce.sql`, `product_procedure.sql` trong thư mục Database
 ### Setup các thư viện cho project
 Do việc push kèm thư mục node_modules (thư mục chứa các thư viện cho NodeJS và ReactJS) sẽ khiến project trở nên rất nặng (thư mục node_modules của ReactJS có dung lượng loanh quanh 300-400 MB), cũng như git sẽ không thể track được toàn bộ thay đổi.
 
@@ -71,6 +70,8 @@ Trang localhost:3000 sẽ khởi chạy tự động trên trình duyệt mặc 
         - git push origin master.
 - Referencial link: https://www.youtube.com/playlist?list=PL_-VfJajZj0W8-gf0g3YCCyFh-pVFMOgy
 ### Các lưu ý
+- Tài khoản: customer1@gmail.com, seller1@gmail.com
+- Mật khẩu: 23571113
 - File database này hiện chỉ có 1 table là user có dữ liệu. Vui lòng thêm các table khác liên quan đến module mà các bạn làm, cũng như thêm dữ liệu vào khi làm.
 - Hiện tại, trang đã hiện thực tính năng đăng nhập (signin/authentication),  đăng ký (signup/registration) và có cơ chế xác thực (authorization), và các thành viên được khuyến khích đọc qua code cả Front-end lẫn Back-end để hiểu và thêm cơ chế xác thực (authorization) vào các trang, các tính năng cần đăng nhập với quyền nhất định (xem minh hoạ trong chính repo này về hai trang công khai (/publicTest) và trang ẩn (/protectedTest) để hiểu và quan sát cách nó vận hành). 
 - Lưu ý thêm là mật khẩu của user trong database sẽ bị mã hoá, do đó khi đăng ký bất kỳ user nào mới thì phải nhớ mật khẩu. Mật khẩu cho hai tài khoản đang có sẵn trong database hiện tại là 23571113
