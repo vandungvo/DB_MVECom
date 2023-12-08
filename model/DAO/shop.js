@@ -1,5 +1,17 @@
 var connect_DB = require('./connect_db');
 
+const getShopName = (shop_id, controller) => {
+    const query = `CALL GetShopName(${shop_id})`;
+    connect_DB.query(query, (err, result) => {
+        if (err) {
+            console.error(err);
+            controller(err, null);
+        } else { 
+            controller(null, result[0]);
+        }
+    });
+}
+
 const getAllProducts = (shop_id, controller) => {
     const query = `CALL GetAllProducts(${shop_id})`;
     connect_DB.query(query, (err, result) => {
@@ -49,6 +61,7 @@ const deleteProduct = (productId, callback) => {
 }
 
 module.exports = {
+    getShopName,
     getAllProducts,
     insertProduct,
     updateProduct,

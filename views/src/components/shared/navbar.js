@@ -11,10 +11,13 @@ import axios from 'axios';
 const UserContext = createContext();
 
 export default function Navbar() {
+    const [shopName, setShopName] = useState(null);
     const navigate = useNavigate();
-    const [signin, setSignIn] = useState(false);
     const cookies = new Cookies();
+    const [signin, setSignIn] = useState(false);
     const [user_type, setUserType] = useState(null);
+    const shop_id = cookies.get("USER_ID") || null;
+            
     useEffect(() => {
         const token = cookies.get("TOKEN");
         if (!token) {
@@ -22,6 +25,14 @@ export default function Navbar() {
             setUserType(null);
         }
         else {
+            axios.post('/api/shop/getShopName', {
+                shop_id
+            })
+            .then(response => {
+                setShopName(response.data[0].shop_name)
+            })
+            .catch(error => console.error('Error fetching shop name:', error));
+            
             axios.post("/api/authorization/customer", {}, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -64,12 +75,16 @@ export default function Navbar() {
         cookies.remove('TOKEN', {
             path: "/",
         });
+        cookies.remove('USER_ID', {
+            path: "/",
+        });
         setSignIn(false);
         setUserType(null);
+        setShopName(null);
         navigate("signin");
     }
 
-    let navItem = null, renderSignOut = null, renderSignIn = null;
+    let navItem = null, renderSignOut = null, renderSignIn = null, renderWelcome = null;
 
     if (!signin) {
         navItem = (
@@ -105,6 +120,11 @@ export default function Navbar() {
             );
         }
         else if (user_type === "Seller") {
+            renderWelcome = (
+                <Link className="nav-link" to="/manageProfile">
+                    Hi {shopName}
+                </Link>
+            )
             navItem = (
                 <>
                     <li className="nav-item">
@@ -171,6 +191,7 @@ export default function Navbar() {
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         {navItem}
                     </ul>
+                    {renderWelcome}
                     {renderSignIn}
                     {renderSignOut}
                 </div>

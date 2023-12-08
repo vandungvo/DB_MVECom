@@ -13,7 +13,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 function ManageProduct() {
-    const shop_id = cookies.get("SHOP_ID") || null;
+    const shop_id = cookies.get("USER_ID") || null;
     const [reFresh, setReFresh] = useState(0);
     const [products, setProducts] = useState([]);
     const [addPopup, setAddPopup] = useState(false);
@@ -23,7 +23,7 @@ function ManageProduct() {
     const [max_file_size, setMaxFileSize] = useState('');
 
     useEffect(() => {
-        axios.post('/api/viewProduct', {
+        axios.post('/api/shop/viewProduct', {
             shop_id
         })
         .then(response => {
