@@ -1,5 +1,3 @@
-set global local_infile = true;
-
 use e_commerce;
 delete from users;
 LOAD DATA LOCAL INFILE 'c:/users/admin/Documents/hcsdl/DB_MVECom/data/users.csv' 
@@ -52,5 +50,3 @@ LOAD DATA LOCAL INFILE 'c:/users/admin/Documents/hcsdl/DB_MVECom/data/bill_produ
 INTO TABLE bill_product
 FIELDS TERMINATED BY ',' 
 IGNORE 1 ROWS;
-
-select * from product
