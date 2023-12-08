@@ -1,16 +1,13 @@
-- git init
-- git status 
-- git add
-- git reset
-- git log
-- git commit
-- git log
-- git log -- oneline
-- git checkout {branch name}
-- git branch
-- git checkout -b {branch name}
-- git merge {branch name}
-- git push
-- git remote at origin {repo url}
-- git clone {repo url}
-- git fetch origin
+- github
+    - Đầu tiên, mở folder để chứa project (Example: Desktop, Database) 
+        - git clone https://github.com/vandungvo/DB_MVECom.git 
+        - npm install
+        - cd views
+        - npm install
+        - cd ..
+        - npm run dev
+    - Sau đó, khi ta thay đổi code, ta muốn push lên remote repository
+        - git add .
+        - git commit -m "..."
+        - git pull origin master
+        - git push origin master.
