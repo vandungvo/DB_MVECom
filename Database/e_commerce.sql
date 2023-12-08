@@ -46,7 +46,7 @@ create table category (
 
 
 create table product (
-	product_id varchar(10) not null primary key,
+	product_id varchar(10) not null primary key auto_increment,
     shop_id varchar(10) not null,
     ctg_id varchar(10) not null,
     name varchar(100) not null,
@@ -57,8 +57,8 @@ create table product (
    
     image text,
     SKU varchar(8) not null unique,
-    sold_quantities int not null,
-    rating decimal(2, 1),
+    sold_quantities int not null set default 0,
+    rating decimal(2, 1) set default 0,
     constraint foreign key (shop_id) references shop (user_id),
     constraint foreign key (ctg_id) references category (ctg_id)
 );

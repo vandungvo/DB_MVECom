@@ -121,8 +121,8 @@ export default function Navbar() {
         }
         else if (user_type === "Seller") {
             renderWelcome = (
-                <Link className="nav-link" to="/manageProfile">
-                    Hi {shopName}
+                <Link className="nav-link m-3" to="/manageProfile">
+                    {shopName}
                 </Link>
             )
             navItem = (
@@ -162,8 +162,8 @@ export default function Navbar() {
             );
         }
         renderSignOut = (
-            <button type="submit" className="btn btn-primary" onClick={handleSignOut}>
-                Đăng xuất
+            <button type="submit" className="btn btn-light" onClick={handleSignOut}>
+                Log Out
             </button>
         );
     }

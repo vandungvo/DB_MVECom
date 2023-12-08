@@ -9,6 +9,7 @@ import axios from 'axios'
 import { useState, useEffect } from "react";
 import Header from '../shared/header';
 import Cookies from "universal-cookie";
+import './manageProduct.css';
 
 const cookies = new Cookies();
 
@@ -136,7 +137,7 @@ function ManageProduct() {
                 <div className="popup-overlay">
                 <div className="popup">
                     <div>
-                        <h2 className="mt-1">Thêm loại file</h2>
+                        <h2 className="mt-1">Add new product</h2>
                     </div>
                     <form>
                     <table>
