@@ -1,0 +1,16 @@
+- git init
+- git status 
+- git add
+- git reset
+- git log
+- git commit
+- git log
+- git log -- oneline
+- git checkout {branch name}
+- git branch
+- git checkout -b {branch name}
+- git merge {branch name}
+- git push
+- git remote at origin {repo url}
+- git clone {repo url}
+- git fetch origin
