@@ -1,5 +1,4 @@
 use e_commerce;
-delete from users;
 LOAD DATA LOCAL INFILE 'c:/users/admin/Documents/hcsdl/DB_MVECom/data/users.csv' 
 INTO TABLE users
 FIELDS TERMINATED BY ',' 
