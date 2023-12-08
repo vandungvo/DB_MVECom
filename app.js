@@ -9,10 +9,11 @@ var cookieParser = require('cookie-parser'); // parse cookies from HTTP requests
 
 const homepageRoute = require('./routes/homepage'); // handles requests for the homepage
 const signinRoute = require('./routes/signin');
+const authorizationRoute = require("./routes/authorization");
 const protectedTestRoute = require("./routes/protected_test");
 const registrationRoute = require("./routes/registration");
 const publicTestRoute = require("./routes/public_test");
-
+const shopRoute = require("./routes/shop");
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -46,10 +47,14 @@ app.use("/api/homepage", homepageRoute); // associate homepageRoute with the /ap
 
 app.use("/api/signin", signinRoute);
 
+app.use("/api/authorization", authorizationRoute);
+
 app.use("/api/protectedTest", protectedTestRoute);
 
 app.use("/api/register", registrationRoute);
 
 app.use("/api/publicTest", publicTestRoute);
+
+app.use("/api/shop", shopRoute);
 
 app.listen(8080);
