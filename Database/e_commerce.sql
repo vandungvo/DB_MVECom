@@ -69,6 +69,7 @@ create table category (
 );
 
 create table product (
+<<<<<<< HEAD
 	product_id varchar(40) not null primary key,
     shop_id varchar(40) not null,
     ctg_id varchar(40) not null,
@@ -76,14 +77,30 @@ create table product (
     SKU varchar(10) not null unique,
     upload_date date not null default (curdate()),
 	price decimal(14,2) not null,
+=======
+	product_id varchar(10) not null primary key auto_increment,
+    shop_id varchar(10) not null,
+    ctg_id varchar(10) not null,
+    name varchar(100) not null,
+    
+    upload_date date not null,
+>>>>>>> 040b58937bfe1e33951db2e412c8c9e8fed3a58b
     stock int not null,
 	sold_quantities int not null default 0,
     description text,
     image text,
+<<<<<<< HEAD
     rating decimal(2, 1) default 0,
 	rate_nums int default 0,
     constraint shop_product_fk foreign key (shop_id) references shop (user_id) on update cascade on delete cascade, 
     constraint ctg_product_fk foreign key (ctg_id) references category (ctg_id) on update cascade on delete no action
+=======
+    SKU varchar(8) not null unique,
+    sold_quantities int not null set default 0,
+    rating decimal(2, 1) set default 0,
+    constraint foreign key (shop_id) references shop (user_id),
+    constraint foreign key (ctg_id) references category (ctg_id)
+>>>>>>> 040b58937bfe1e33951db2e412c8c9e8fed3a58b
 );
 
 /* kiem tra lai weak entity*/
