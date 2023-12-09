@@ -60,6 +60,7 @@ LOAD DATA LOCAL INFILE 'c:/users/admin/Documents/hcsdl/DB_MVECom/data/bill_produ
 INTO TABLE bill_product
 FIELDS TERMINATED BY ',' 
 <<<<<<< HEAD
+<<<<<<< HEAD
 IGNORE 1 ROWS;
 
 -- Insert data into 'users' table
@@ -146,6 +147,10 @@ VALUES (1, 1, 1, 'Product damaged', 30.00, '2023-12-10', 'WAIT FOR CONFIRMATION'
 SET foreign_key_checks = 1;
 
 
+=======
+IGNORE 1 ROWS
+(bill_id,product_id,quantity);
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 IGNORE 1 ROWS
 (bill_id,product_id,quantity);

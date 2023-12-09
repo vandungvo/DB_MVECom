@@ -26,7 +26,11 @@ drop table if exists users;
 
 create table users (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	user_id int not null primary key,
+=======
+	user_id int not null primary key auto_increment,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	user_id int not null primary key auto_increment,
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
@@ -35,7 +39,11 @@ create table users (
 	user_type varchar(10) not null,
     email varchar(100) not null,
 <<<<<<< HEAD
+<<<<<<< HEAD
     password varchar(127) not null,
+=======
+    user_password varchar(32) not null,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
     user_password varchar(32) not null,
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
@@ -44,7 +52,11 @@ create table users (
 
 create table customer (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	user_id int not null primary key,
+=======
+	user_id int not null primary key auto_increment,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	user_id int not null primary key auto_increment,
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
@@ -53,8 +65,13 @@ create table customer (
 
 create table shipping_company (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	company_id int not null primary key,
     name varchar(100) not null,
+=======
+	company_id int not null primary key auto_increment,
+    company_name varchar(100) not null,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	company_id int not null primary key auto_increment,
     company_name varchar(100) not null,
@@ -65,7 +82,11 @@ create table shipping_company (
 
 create table shipper (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	user_id int not null primary key,
+=======
+	user_id int not null primary key auto_increment,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	user_id int not null primary key auto_increment,
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
@@ -77,7 +98,11 @@ create table shipper (
 
 create table shop (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	user_id int not null primary key,
+=======
+	user_id int not null primary key auto_increment,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	user_id int not null primary key auto_increment,
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
@@ -87,6 +112,7 @@ create table shop (
 ); 
 
 create table category (
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ctg_id int not null primary key,
     name varchar(100) not null
@@ -103,11 +129,21 @@ create table product (
 );
 
 create table product (
+=======
+	ctg_id int not null primary key auto_increment,
+    ctg_name varchar(100) not null
+);
+
+create table product (
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 
 	product_id int not null primary key auto_increment,
     shop_id int not null,
     ctg_id int not null,
     product_name varchar(1000) not null,
+<<<<<<< HEAD
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
+=======
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     SKU varchar(10) not null unique,
     upload_date date not null default (curdate()),
@@ -130,7 +166,11 @@ create table product (
 
 create table wish_item (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	wish_id int not null primary key,
+=======
+	wish_id int not null primary key auto_increment,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	wish_id int not null primary key auto_increment,
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
@@ -142,9 +182,14 @@ create table wish_item (
 
 create table promotion (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	promotion_id int not null primary key,
     name varchar(100) not null,
     /* xem lai start_date*/
+=======
+	promotion_id varchar(20) not null primary key,
+    promotion_name varchar(100) not null,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	promotion_id varchar(20) not null primary key,
     promotion_name varchar(100) not null,
@@ -158,7 +203,11 @@ create table promotion (
 
 create table shop_promotion (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	promotion_id int not null,
+=======
+	promotion_id varchar(20) not null,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	promotion_id varchar(20) not null,
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
@@ -169,7 +218,11 @@ create table shop_promotion (
 
 create table sale (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sale_id int not null primary key,
+=======
+	sale_id varchar(20) not null primary key,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	sale_id varchar(20) not null primary key,
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
@@ -180,7 +233,11 @@ create table sale (
 
 create table voucher (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	voucher_id int not null primary key,
+=======
+	voucher_id varchar(20) not null primary key,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	voucher_id varchar(20) not null primary key,
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
@@ -193,7 +250,11 @@ create table voucher (
 
 create table orders (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	order_id int not null primary key,
+=======
+	order_id int not null primary key auto_increment,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	order_id int not null primary key auto_increment,
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
@@ -226,15 +287,21 @@ create table payment (
 
 create table bill (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bill_id int not null primary key,
     order_id int not null,
     shop_id int not null,
     voucher_id int,
 =======
+=======
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 	bill_id int not null primary key auto_increment,
     order_id int not null,
     shop_id int not null,
     voucher_id varchar(20) default null,
+<<<<<<< HEAD
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
+=======
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     order_date date not null default (curdate()),
     total_price decimal(12,2) not null,
@@ -255,8 +322,13 @@ create table bill_product (
 
 create table shipment (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	shipment_id int not null primary key,
     voucher_id int,
+=======
+	shipment_id int not null primary key auto_increment,
+    voucher_id varchar(20),
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	shipment_id int not null primary key auto_increment,
     voucher_id varchar(20),
@@ -276,7 +348,10 @@ create table shipment (
 create table shipment_address (
 	shipment_id int not null,
 <<<<<<< HEAD
+<<<<<<< HEAD
     /* thieu cac thuoc tinh */
+=======
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     street_address varchar(50),
@@ -288,7 +363,11 @@ create table shipment_address (
 
 create table review (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	review_id int not null primary key,
+=======
+	review_id int not null primary key auto_increment,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	review_id int not null primary key auto_increment,
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
@@ -304,7 +383,11 @@ create table review (
 
 create table refund (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	refund_id int not null primary key,
+=======
+	refund_id int not null primary key auto_increment,
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
 	refund_id int not null primary key auto_increment,
 >>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
@@ -317,10 +400,15 @@ create table refund (
     constraint customer_refund_fk foreign key (cus_id) references customer (user_id) on update no action on delete cascade,
     constraint bill_refund_fk foreign key (bill_id) references bill (bill_id) on update no action on delete no action,
 <<<<<<< HEAD
+<<<<<<< HEAD
     constraint refund_status check (status in ('WAIT FOR CONFIRMATION', 'CONFIRMED', 'REFUSED'))
 );
 
 set foreign_key_checks = 0;
+=======
+    constraint refund_status check (refund_status in ('WAIT FOR CONFIRMATION', 'CONFIRMED', 'REFUSED'))
+);
+>>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 =======
     constraint refund_status check (refund_status in ('WAIT FOR CONFIRMATION', 'CONFIRMED', 'REFUSED'))
 );
