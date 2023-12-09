@@ -58,7 +58,6 @@ create table shipper (
 create table shop (
 	user_id varchar(40) not null primary key,
     shop_name varchar(100) not null,
-    /*xem xet address */
     address text,
     constraint user_shop_fk foreign key (user_id) references users (user_id) on update cascade on delete cascade
 ); 
@@ -69,41 +68,27 @@ create table category (
 );
 
 create table product (
-<<<<<<< HEAD
-	product_id varchar(40) not null primary key,
+
+	product_id varchar(40) not null primary key auto_increment,
     shop_id varchar(40) not null,
     ctg_id varchar(40) not null,
     name varchar(1000) not null,
     SKU varchar(10) not null unique,
     upload_date date not null default (curdate()),
 	price decimal(14,2) not null,
-=======
-	product_id varchar(10) not null primary key auto_increment,
-    shop_id varchar(10) not null,
-    ctg_id varchar(10) not null,
-    name varchar(100) not null,
-    
-    upload_date date not null,
->>>>>>> 040b58937bfe1e33951db2e412c8c9e8fed3a58b
+
     stock int not null,
 	sold_quantities int not null default 0,
     description text,
     image text,
-<<<<<<< HEAD
+
     rating decimal(2, 1) default 0,
 	rate_nums int default 0,
     constraint shop_product_fk foreign key (shop_id) references shop (user_id) on update cascade on delete cascade, 
     constraint ctg_product_fk foreign key (ctg_id) references category (ctg_id) on update cascade on delete no action
-=======
-    SKU varchar(8) not null unique,
-    sold_quantities int not null set default 0,
-    rating decimal(2, 1) set default 0,
-    constraint foreign key (shop_id) references shop (user_id),
-    constraint foreign key (ctg_id) references category (ctg_id)
->>>>>>> 040b58937bfe1e33951db2e412c8c9e8fed3a58b
+
 );
 
-/* kiem tra lai weak entity*/
 create table wish_item (
 	wish_id varchar(40) not null primary key,
     cus_id varchar(40) not null,
@@ -112,15 +97,12 @@ create table wish_item (
     constraint product_wish_fk foreign key (product_id) references product (product_id)
 );
 
-/*kiem tra lai phan nay*/
 create table promotion (
 	promotion_id varchar(40) not null primary key,
     name varchar(100) not null,
-    /* xem lai start_date*/
     start_date date not null,
     end_date date not null,
     promotion_type varchar (16) not null,
-    /* kiem tra lai discount */
     discount_percen int not null,
     constraint promotion_type check (promotion_type in ('VOUCHER', 'SALE', 'SHOP PROMOTION'))
 );
@@ -152,7 +134,6 @@ create table orders (
 	order_id varchar(40) not null primary key,
     cus_id varchar(40) not null,
     total_price decimal(12, 2) not null,
-    /* chu y kieu du lieu date*/
     order_date date not null default(curdate()),
     constraint customer_order_fk foreign key (cus_id) references customer (user_id) on update cascade on delete cascade
 );
@@ -173,9 +154,7 @@ values
 create table payment (
 	order_id varchar(10) not null,
     amount decimal(12,2) not null,
-    /* thieu method*/
     method_id int not null,
-    /*thieu timestamp*/
     timestamp datetime not null default current_timestamp,
     constraint method_payment_fk foreign key (method_id) references method (method_id) on update no action on delete no action
 );
@@ -187,7 +166,6 @@ create table bill (
     voucher_id varchar(40),
     order_date date not null default (curdate()),
     total_price decimal(12,2) not null,
-    /* thieu thuoc tinh status*/
     status varchar(32) not null,
     constraint oder_bill_fk foreign key (order_id) references orders (order_id) on update cascade on delete cascade,
     constraint shop_bill_fk foreign key (shop_id) references shop (user_id) on update no action on delete no action,
@@ -211,7 +189,6 @@ create table shipment (
     shipper_id varchar(40) not null,
     shipping_free decimal(10,2) not null,
     phone_num varchar(12) not null,
-    /* kiem tra lai state*/
     status varchar(12) not null,
     estimated_time date default (curdate()),
     constraint voucher_shipment_fk foreign key (voucher_id) references voucher (voucher_id) on update no action on delete no action,
@@ -222,7 +199,6 @@ create table shipment (
 
 create table shipment_address (
 	shipment_id varchar(40) not null,
-    /* thieu cac thuoc tinh */
     street_address varchar(50),
     district varchar(20),
     city varchar(20) not null,
@@ -249,7 +225,6 @@ create table refund (
     reason text,
     amount decimal(12,2) not null,
     date date not null default (curdate()),
-    /* thieu state*/
     status varchar(32) not null,
     constraint customer_refund_fk foreign key (cus_id) references customer (user_id) on update no action on delete cascade,
     constraint bill_refund_fk foreign key (bill_id) references bill (bill_id) on update no action on delete no action,
