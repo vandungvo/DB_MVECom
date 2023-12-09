@@ -25,71 +25,29 @@ drop table if exists customer;
 drop table if exists users;
 
 create table users (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	user_id int not null primary key,
-=======
 	user_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	user_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     first_name varchar(30) not null,
     last_name varchar(30) not null,
 	user_type varchar(10) not null,
     email varchar(100) not null,
-<<<<<<< HEAD
-<<<<<<< HEAD
-    password varchar(127) not null,
-=======
     user_password varchar(32) not null,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-    user_password varchar(32) not null,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     constraint user_type check (user_type in ('CUSTOMER', 'SELLER', 'SHIPPER', 'ADMIN'))
 );
 
 create table customer (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	user_id int not null primary key,
-=======
 	user_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	user_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     constraint user_customer_fk foreign key (user_id) references users (user_id) on update cascade on delete cascade
 );
 
 create table shipping_company (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	company_id int not null primary key,
-    name varchar(100) not null,
-=======
 	company_id int not null primary key auto_increment,
     company_name varchar(100) not null,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	company_id int not null primary key auto_increment,
-    company_name varchar(100) not null,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     address text,
     phone_num varchar(12) not null unique
 );
 
 create table shipper (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	user_id int not null primary key,
-=======
 	user_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	user_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     company_id int not null,
 	phone_num varchar(12) not null unique,
     constraint user_shipper_fk foreign key (user_id) references users (user_id) on update cascade on delete cascade,
@@ -97,54 +55,23 @@ create table shipper (
 );
 
 create table shop (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	user_id int not null primary key,
-=======
 	user_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	user_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     shop_name varchar(100) not null,
     address text,
     constraint user_shop_fk foreign key (user_id) references users (user_id) on update cascade on delete cascade
 ); 
 
 create table category (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ctg_id int not null primary key,
-    name varchar(100) not null
-);
-
-create table product (
-	product_id int not null primary key auto_increment,
-    shop_id int not null,
-    ctg_id int not null,
-    name varchar(1000) not null,
-=======
 	ctg_id int not null primary key auto_increment,
     ctg_name varchar(100) not null
 );
 
 create table product (
-=======
-	ctg_id int not null primary key auto_increment,
-    ctg_name varchar(100) not null
-);
-
-create table product (
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 
 	product_id int not null primary key auto_increment,
     shop_id int not null,
     ctg_id int not null,
     product_name varchar(1000) not null,
-<<<<<<< HEAD
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     SKU varchar(10) not null unique,
     upload_date date not null default (curdate()),
 	price decimal(14,2) not null,
@@ -165,15 +92,7 @@ create table product (
 );
 
 create table wish_item (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	wish_id int not null primary key,
-=======
 	wish_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	wish_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     cus_id int not null,
     product_id int not null,
     constraint cus_wish_fk foreign key (cus_id) references customer (user_id) on update cascade on delete cascade,
@@ -181,19 +100,8 @@ create table wish_item (
 );
 
 create table promotion (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	promotion_id int not null primary key,
-    name varchar(100) not null,
-    /* xem lai start_date*/
-=======
 	promotion_id varchar(20) not null primary key,
     promotion_name varchar(100) not null,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	promotion_id varchar(20) not null primary key,
-    promotion_name varchar(100) not null,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     start_date date not null,
     end_date date not null,
     promotion_type varchar (16) not null,
@@ -202,45 +110,21 @@ create table promotion (
 );
 
 create table shop_promotion (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	promotion_id int not null,
-=======
 	promotion_id varchar(20) not null,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	promotion_id varchar(20) not null,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     shop_id int not null,
     constraint promotion_fk foreign key  (promotion_id) references promotion (promotion_id) on update cascade on delete no action, 
     constraint shop_promotion_fk foreign key (shop_id) references shop (user_id) on update cascade on delete cascade
 );
 
 create table sale (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	sale_id int not null primary key,
-=======
 	sale_id varchar(20) not null primary key,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	sale_id varchar(20) not null primary key,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     product_id int not null,
     constraint promotion_sale_fk foreign key (sale_id) references promotion (promotion_id) on update cascade on delete no action,
     constraint product_sale_fk foreign key (product_id) references product (product_id) on update cascade on delete cascade
 );
 
 create table voucher (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	voucher_id int not null primary key,
-=======
 	voucher_id varchar(20) not null primary key,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	voucher_id varchar(20) not null primary key,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     cus_id int not null,
     voucher_code varchar(50) not null,
     max_amount int not null,
@@ -249,15 +133,7 @@ create table voucher (
 );
 
 create table orders (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	order_id int not null primary key,
-=======
 	order_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	order_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     cus_id int not null,
     total_price decimal(12, 2) not null,
     order_date date not null default(curdate()),
@@ -286,23 +162,10 @@ create table payment (
 );
 
 create table bill (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bill_id int not null primary key,
-    order_id int not null,
-    shop_id int not null,
-    voucher_id int,
-=======
-=======
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
 	bill_id int not null primary key auto_increment,
     order_id int not null,
     shop_id int not null,
     voucher_id varchar(20) default null,
-<<<<<<< HEAD
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     order_date date not null default (curdate()),
     total_price decimal(12,2) not null,
     bill_status varchar(35) not null,
@@ -321,18 +184,8 @@ create table bill_product (
 );
 
 create table shipment (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	shipment_id int not null primary key,
-    voucher_id int,
-=======
 	shipment_id int not null primary key auto_increment,
     voucher_id varchar(20),
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	shipment_id int not null primary key auto_increment,
-    voucher_id varchar(20),
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     bill_id int not null,
     shipper_id int not null,
     shipping_free decimal(10,2) not null,
@@ -347,13 +200,6 @@ create table shipment (
 
 create table shipment_address (
 	shipment_id int not null,
-<<<<<<< HEAD
-<<<<<<< HEAD
-    /* thieu cac thuoc tinh */
-=======
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     street_address varchar(50),
     district varchar(20),
     city varchar(20) not null,
@@ -362,15 +208,7 @@ create table shipment_address (
 );
 
 create table review (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	review_id int not null primary key,
-=======
 	review_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	review_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     cus_id int not null,
     product_id int not null,
     post_date datetime not null default current_timestamp,
@@ -382,15 +220,7 @@ create table review (
 );
 
 create table refund (
-<<<<<<< HEAD
-<<<<<<< HEAD
-	refund_id int not null primary key,
-=======
 	refund_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-	refund_id int not null primary key auto_increment,
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
     cus_id int not null,
     bill_id int not null,
     reason text,
@@ -399,17 +229,5 @@ create table refund (
     refund_status varchar(32) not null,
     constraint customer_refund_fk foreign key (cus_id) references customer (user_id) on update no action on delete cascade,
     constraint bill_refund_fk foreign key (bill_id) references bill (bill_id) on update no action on delete no action,
-<<<<<<< HEAD
-<<<<<<< HEAD
-    constraint refund_status check (status in ('WAIT FOR CONFIRMATION', 'CONFIRMED', 'REFUSED'))
-);
-
-set foreign_key_checks = 0;
-=======
     constraint refund_status check (refund_status in ('WAIT FOR CONFIRMATION', 'CONFIRMED', 'REFUSED'))
 );
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
-=======
-    constraint refund_status check (refund_status in ('WAIT FOR CONFIRMATION', 'CONFIRMED', 'REFUSED'))
-);
->>>>>>> 84d2b02de39f5c4c18dad3b6e164edbe3832f860
