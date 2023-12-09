@@ -12,7 +12,7 @@ const cookies = new Cookies();
 
 function SignIn() {
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [user_password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(null);
     const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ function SignIn() {
         e.preventDefault();
         axios.post("/api/signin", { 
             email, 
-            password 
+            user_password 
         })
         .then((response) => {
             cookies.set("TOKEN", response.data.token, { 
@@ -30,10 +30,10 @@ function SignIn() {
             setTimeout(() => {
                 window.location.reload();
             }, 100);
-            if (response.data.member.user_type == "Customer") {
+            if (response.data.member.user_type == "CUSTOMER") {
                 navigate("/publicTest")
             }
-            else if (response.data.member.user_type == "Seller") {
+            else if (response.data.member.user_type == "SELLER") {
                 cookies.set("USER_ID", userId, { path: "/" });
                 navigate("/manageProduct");
             }
@@ -70,7 +70,7 @@ function SignIn() {
                     type="password"
                     className="form-control"
                     id="exampleInputPassword1"
-                    value={password}
+                    value={user_password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </div>

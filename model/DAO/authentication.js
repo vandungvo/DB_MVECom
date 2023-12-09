@@ -22,7 +22,7 @@ function signin(res, obj) {
             res.status(400).json({ message: "Người dùng không tồn tại hoặc sai thông tin đăng nhập. Vui lòng thử lại" });
         }
         else {
-            bcrypt.compare(obj.password, result[0].password)
+            bcrypt.compare(obj.user_password, result[0].user_password)
                 .then((passwordCheck) => {
                     if (!passwordCheck) {
                         res.status(400).json({ message: "Người dùng không tồn tại hoặc sai thông tin đăng nhập. Vui lòng thử lại" });

@@ -30,7 +30,7 @@ async function authorizeCustomer(req, res, next) {
                 res.status(400).json({ message: "Người dùng không tồn tại. Vui lòng kiểm tra" });
             }
             else {
-                if (result[0].user_type != "Customer") {
+                if (result[0].user_type != "CUSTOMER") {
                     res.status(403).json({ message: "Người dùng không có quyền truy cập trang hay tác vụ này!" });
                 }
                 else {
@@ -59,7 +59,7 @@ async function authorizeSeller(req, res, next) {
                 res.status(400).json({ message: "Người dùng không tồn tại. Vui lòng kiểm tra" });
             }
             else {
-                if (result[0].user_type != "Seller") {
+                if (result[0].user_type != "SELLER") {
                     res.status(403).json({ message: "Người dùng không có quyền truy cập trang hay tác vụ này!" });
                 }
                 else {
@@ -88,7 +88,7 @@ async function authorizeShipper(req, res, next) {
                 res.status(400).json({ message: "Người dùng không tồn tại. Vui lòng kiểm tra" });
             }
             else {
-                if (result[0].user_type != "Shipper") {
+                if (result[0].user_type != "SHIPPER") {
                     res.status(403).json({ message: "Người dùng không có quyền truy cập trang hay tác vụ này!" });
                 }
                 else {
@@ -117,7 +117,7 @@ async function authorizeAdmin(req, res, next) {
                 res.status(400).json({ message: "Người dùng không tồn tại. Vui lòng kiểm tra" });
             }
             else {
-                if (result[0].user_type != "Admin") {
+                if (result[0].user_type != "ADMIN") {
                     res.status(403).json({ message: "Người dùng không có quyền truy cập trang hay tác vụ này!" });
                 }
                 else {

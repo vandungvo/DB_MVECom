@@ -17,20 +17,31 @@ function ManageProduct() {
     const shop_id = cookies.get("USER_ID") || null;
     const [reFresh, setReFresh] = useState(0);
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [addPopup, setAddPopup] = useState(false);
     const [editPopup, setEditPopup] = useState(false);
-    const [permitted_id, setPermittedId] = useState('');
-    const [file_type, setFileType] = useState('');
-    const [max_file_size, setMaxFileSize] = useState('');
+    const [ctg_id, setCtgId] = useState('');
+    const [name, setName] = useState('');
+    const [SKU, setSKU] = useState('');
+    const [price, setPrice] = useState('');
+    const [stock, setStock] = useState('');
+    const [description, setDescription] = useState('');
+    const [image, setImage] = useState('');
 
     useEffect(() => {
         axios.post('/api/shop/viewProduct', {
             shop_id
         })
         .then(response => {
-            console.log(response.data); setProducts(response.data)
+            setProducts(response.data);
         })
         .catch(error => console.error('Error fetching products:', error));
+
+        axios.post('/api/shop/getCategories')
+        .then(response => {
+            setCategories(response.data);
+        }).catch(error => console.error('Error fetching categories:', error));
+
     }, [reFresh]);
 
     const handleAddButtonClick = () => {
@@ -39,36 +50,40 @@ function ManageProduct() {
 
     const handleAddPopupClose = () => {
         setAddPopup(false);
-        setFileType('');
-        setMaxFileSize('');
+
     }
 
     const handleAddFileSubmit = () => {
-        axios.post('/api/viewPermittedFileType/add', {
-            file_type,
-            max_file_size
+        axios.post('/api/shop/insertProduct', {
+            shop_id,
+            ctg_id,
+            name,
+            SKU,
+            price,
+            stock,
+            description,
+            image
         }).then(response => {
             setReFresh(prev => prev + 1)
-        }).catch(error => console.error('Error fetching permitted file types:', error));
+        }).catch(error => {
+            console.error('Error: ', error.message);
+            console.log(ctg_id);
+        });
         handleAddPopupClose();
     };
     
     const handleEditFileType = (permitted_id) => {
-        setPermittedId(permitted_id);
+        
         setEditPopup(true);
     }
 
     const handleEditPopupClose = () => {
-        setFileType('');
-        setMaxFileSize('');
         setEditPopup(false);
     }
 
     const handleEditFileSubmit = () => {
         axios.post('/api/viewPermittedFileType/edit', {
-            permitted_id,
-            file_type,
-            max_file_size
+            
         }).then(response => {
             setReFresh(prev => prev + 1)
         })
@@ -106,7 +121,7 @@ function ManageProduct() {
                         <tr key={product.product_id}>
                             <td className='text-center'>{product.product_id}</td>
                             <td className='text-center'>{product.ctg_name}</td>
-                            <td className='text-center'>{product.name}</td>
+                            <td className='text-center'>{product.product_name}</td>
                             <td className='text-center'>{product.stock}</td>
                             <td className='text-center'>{product.price}</td>
                             <td className='text-center'>{product.SKU}</td>
@@ -142,26 +157,82 @@ function ManageProduct() {
                     <form>
                     <table>
                         <tbody>
-                        <tr>
-                            <td>Loại file:</td>
-                            <td>
-                            <input
-                                type="text"
-                                value={file_type}
-                                onChange={(e) => setFileType(e.target.value)}
-                            />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Kích thước tối đa:</td>
-                            <td>
-                            <input
-                                type="text"
-                                value={max_file_size}
-                                onChange={e => setMaxFileSize(e.target.value)}
-                            />
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>Category</td>
+                                <td>
+                                    <select
+                                        value={ctg_id}
+                                        onChange={(e) => setCtgId(e.target.value)}
+                                    >
+                                        <option value="">Select a category</option>
+                                        {categories.map((ctg) => (
+                                            <option key={ctg.id} value={ctg.ctg_id}>
+                                                {ctg.ctg_name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Name</td>
+                                <td>
+                                <input
+                                    type="text"
+                                    value={name}
+                                    onChange={e => setName(e.target.value)}
+                                />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>SKU</td>
+                                <td>
+                                <input
+                                    type="text"
+                                    value={SKU}
+                                    onChange={e => setSKU(e.target.value)}
+                                />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Price</td>
+                                <td>
+                                <input
+                                    type="text"
+                                    value={price}
+                                    onChange={e => setPrice(e.target.value)}
+                                />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Stock</td>
+                                <td>
+                                <input
+                                    type="text"
+                                    value={stock}
+                                    onChange={e => setStock(e.target.value)}
+                                />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>
+                                <input
+                                    type="text"
+                                    value={description}
+                                    onChange={e => setDescription(e.target.value)}
+                                />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Image</td>
+                                <td>
+                                <input
+                                    type="text"
+                                    value={image}
+                                    onChange={e => setImage(e.target.value)}
+                                />
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <button className="btn btn-danger mt-2 mx-5" onClick={handleAddPopupClose}>Huỷ</button>
@@ -183,21 +254,27 @@ function ManageProduct() {
                         <tr>
                             <td>Loại file:</td>
                             <td>
-                            <input
-                                type="text"
-                                value={file_type}
-                                onChange={(e) => setFileType(e.target.value)}
-                            />
+                                <select
+                                    value={ctg_id}
+                                    onChange={(e) => setCtgId(e.target.value)}
+                                >
+                                    <option value="">Select a category</option>
+                                    {categories.map((ctg) => (
+                                        <option key={ctg.id} value={ctg.id}>
+                                            {ctg.name}
+                                        </option>
+                                    ))}
+                                </select>
                             </td>
                         </tr>
                         <tr>
-                            <td>Kích thước tối đa:</td>
+                            <td>Name:</td>
                             <td>
-                            <input
-                                type="text"
-                                value={max_file_size}
-                                onChange={e => setMaxFileSize(e.target.value)}
-                            />
+                                <input
+                                    type="text"
+                                    value={name}
+                                    onChange={e => setName(e.target.value)}
+                                />
                             </td>
                         </tr>
                         </tbody>

@@ -13,6 +13,17 @@ const getShopName = (req, res) => {
     })
 }
 
+const getCategories = (req, res) => {
+    shop_model.getCategories(function (err, categories) {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.json(categories);
+        }
+    })
+}
+
 const viewProduct = (req, res) => {
     let shop_id = req.body.shop_id;
     shop_model.getAllProducts(shop_id, function (err, products) {
@@ -25,8 +36,31 @@ const viewProduct = (req, res) => {
     })
 };
 
+const insertProduct = (req, res) => {
+    let product = {
+        shop_id: req.body.shop_id,
+        ctg_id: req.body.ctg_id,
+        name: req.body.name,
+        SKU: req.body.SKU,
+        price: req.body.price,
+        stock: req.body.stock,
+        description: req.body.description,
+        image: req.body.image
+    };
+    shop_model.insertProduct(product, function (err, result) {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send(err);
+        } else {
+            res.json({ message: "Successfully add product!" });
+        }
+    })
+};
+
 module.exports = {
     getShopName,
-    viewProduct
+    getCategories,
+    viewProduct,
+    insertProduct
 };
 

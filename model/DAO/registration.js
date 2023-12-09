@@ -56,13 +56,13 @@ function validate(res, obj, register) {
 function register(res, obj) {
     validate(res, obj, function (valid) {
         if (valid) {
-            let sql = "INSERT INTO user (user_id, user_name, email, password, role, state) VALUES (?, ?, ?, ?, ?, ?)"
+            let sql = "INSERT INTO user (user_id, user_name, email, user_password, role, state) VALUES (?, ?, ?, ?, ?, ?)"
             connect_DB.query(sql, [
                 obj.user_id,
                 obj.user_name,
                 obj.email,
-                obj.password,
-                "Sinh viên",
+                obj.user_password,
+                "Customer",
                 "Đang hoạt động"
             ], function (err, result) {
                 if (err)
