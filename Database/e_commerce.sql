@@ -30,7 +30,7 @@ create table users (
     last_name varchar(30) not null,
 	user_type varchar(10) not null,
     email varchar(100) not null,
-    user_password varchar(32) not null,
+    user_password varchar(127) not null,
     constraint user_type check (user_type in ('CUSTOMER', 'SELLER', 'SHIPPER', 'ADMIN'))
 );
 

@@ -1,10 +1,29 @@
 use e_commerce;
+set foreign_key_checks = 0;
 set global local_infile = true;
-LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/users.csv' 
-INTO TABLE users
-FIELDS TERMINATED BY ',' 
-IGNORE 1 ROWS
-(user_id,first_name,last_name,user_type,email,user_password);
+
+insert into users 
+values 
+	-- admin
+	(1,	'Dung',	'Vo', 'ADMIN', 'dungvoadmin@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(12, 'Ky', 'Vo', 'ADMIN', 'kyvoadmin@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(28, 'Thang', 'Pham', 'ADMIN', 'thangphamadmin@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(69, 'Khoa', 'Huynh', 'ADMIN', 'khoahuynhadmin@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	-- customers
+    (2,	'Dung',	'Vo', 'CUSTOMER', 'dungvo@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(3,	'Ky', 'Vo', 'CUSTOMER', 'kyvo@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(4,	'Thang', 'Pham', 'CUSTOMER', 'thangpham@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(5,	'Khoa', 'Huynh', 'CUSTOMER', 'khoahuynh@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+    -- seller
+	(14,	'Dung',	'Vo', 'SELLER', 'dungvoshop@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(15,	'Ky', 'Vo', 'SELLER', 'kyvoshop@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(21,	'Thang', 'Pham', 'SELLER', 'thangphamshop@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(22,	'Khoa', 'Huynh', 'SELLER', 'khoahuynhshop@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+    -- shipper
+	(11,	'Dung',	'Vo', 'SHIPPER', 'dungvoshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(23,	'Ky', 'Vo', 'SHIPPER', 'kyvoshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(29,	'Thang', 'Pham', 'SHIPPER', 'thangphamshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(48,	'Khoa', 'Huynh', 'SHIPPER', 'khoahuynhshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy');
 
 LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/customer.csv' 
 INTO TABLE customer
