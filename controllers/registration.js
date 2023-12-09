@@ -3,14 +3,14 @@ var registration_model = require("../model/DAO/registration")
 
 module.exports = {
     register: function (req, res) {
-        if (req.body.password) {
-            bcrypt.hash(req.body.password, 10)
+        if (req.body.user_password) {
+            bcrypt.hash(req.body.user_password, 10)
                 .then((hashedPassword) => {
                     let user = {
                         user_id: req.body.user_id,
                         user_name: req.body.user_name,
                         email: req.body.email,
-                        password: hashedPassword
+                        user_password: hashedPassword
                     };
                     registration_model.register(res, user);
                 })

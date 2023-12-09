@@ -41,6 +41,7 @@ function ManageProduct() {
         .then(response => {
             setCategories(response.data);
         }).catch(error => console.error('Error fetching categories:', error));
+
     }, [reFresh]);
 
     const handleAddButtonClick = () => {
@@ -120,7 +121,7 @@ function ManageProduct() {
                         <tr key={product.product_id}>
                             <td className='text-center'>{product.product_id}</td>
                             <td className='text-center'>{product.ctg_name}</td>
-                            <td className='text-center'>{product.name}</td>
+                            <td className='text-center'>{product.product_name}</td>
                             <td className='text-center'>{product.stock}</td>
                             <td className='text-center'>{product.price}</td>
                             <td className='text-center'>{product.SKU}</td>
@@ -165,8 +166,8 @@ function ManageProduct() {
                                     >
                                         <option value="">Select a category</option>
                                         {categories.map((ctg) => (
-                                            <option key={ctg.id} value={ctg.id}>
-                                                {ctg.name}
+                                            <option key={ctg.id} value={ctg.ctg_id}>
+                                                {ctg.ctg_name}
                                             </option>
                                         ))}
                                     </select>

@@ -4,7 +4,7 @@ module.exports = {
     signin: function (req, res) {
         let obj = {
             email: req.body.email,
-            password: req.body.password
+            user_password: req.body.user_password
         };
         if (authentication_model.checkNoEmpty(obj)) {
             authentication_model.signin(res, obj);

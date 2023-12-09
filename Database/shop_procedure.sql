@@ -16,7 +16,7 @@ CREATE PROCEDURE GetAllProducts(
 	IN id INT
 )
 BEGIN
-    SELECT p.*, c.name AS ctg_name
+    SELECT p.*, c.ctg_name
     FROM product p
     JOIN category c ON p.ctg_id = c.ctg_id
     WHERE p.shop_id = id;
