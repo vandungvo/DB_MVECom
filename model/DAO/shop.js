@@ -12,6 +12,18 @@ const getShopName = (shop_id, controller) => {
     });
 }
 
+const getCategories = (controller) => {
+    const query = `CALL GetCategories()`;
+    connect_DB.query(query, (err, result) => {
+        if (err) {
+            console.error(err);
+            controller(err, null);
+        } else { 
+            controller(null, result[0]);
+        }
+    });
+}
+
 const getAllProducts = (shop_id, controller) => {
     const query = `CALL GetAllProducts(${shop_id})`;
     connect_DB.query(query, (err, result) => {
@@ -24,14 +36,17 @@ const getAllProducts = (shop_id, controller) => {
     });
 }
 
-const insertProduct = (productName, price, stock, description, callback) => {
-    const query = "CALL InsertProduct(?, ?, ?, ?)";
-    connect_DB.query(query, [productName, price, stock, description], (err, result) => {
+const insertProduct = (product, controller) => {
+    const query = `CALL InsertProduct(
+        ${product.shop_id}, ${product.ctg_id}, '${product.name}', '${product.SKU}', 
+        ${product.price}, ${product.stock}, '${product.description}', '${product.image}'
+    )`;
+    connect_DB.query(query, (err, result) => {
         if (err) {
-            console.error(err);
-            callback(err, null);
+            console.error(err.message);
+            controller(err, null);
         } else {
-            callback(null, result);
+           controller(null, result[0]);
         }
     });
 }
@@ -62,6 +77,7 @@ const deleteProduct = (productId, callback) => {
 
 module.exports = {
     getShopName,
+    getCategories,
     getAllProducts,
     insertProduct,
     updateProduct,

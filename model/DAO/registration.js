@@ -62,7 +62,7 @@ function register(res, obj) {
                 obj.user_name,
                 obj.email,
                 obj.password,
-                "Sinh viên",
+                "Customer",
                 "Đang hoạt động"
             ], function (err, result) {
                 if (err)

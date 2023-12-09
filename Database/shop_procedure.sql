@@ -1,36 +1,67 @@
--- Stored procedure để lấy tất cả thông tin sản phẩm
+-- Stored procedure to get name of shop
 DELIMITER //
-CREATE PROCEDURE GetAllProducts()
-BEGIN
-    SELECT * FROM product;
-END //
-DELIMITER ;
-
--- Stored procedure để thêm mới sản phẩm
-DELIMITER //
-CREATE PROCEDURE InsertProduct(
-    IN productName VARCHAR(255),
-    IN price DECIMAL(10, 2),
-    IN stock INT,
-    IN description TEXT
+CREATE PROCEDURE GetShopName(
+    IN id INT
 )
 BEGIN
-    -- Kiểm tra ràng buộc
-    IF price <= 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Lỗi: Giá sản phẩm phải lớn hơn 0';
-    END IF;
-
-    IF stock <= 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Lỗi: Số lượng tồn kho phải lớn hơn 0';
-    END IF;
-
-    -- Thực hiện insert
-    INSERT INTO product (product_name, price, stock, description, sold_quantities, rating, rate_nums)
-    VALUES (productName, price, stock, description, 0, 0, 0);
+    SELECT shop_name
+    FROM shop
+    WHERE user_id = id;
 END //
 DELIMITER ;
+
+-- Stored procedure to get all products in a shop
+DELIMITER //
+CREATE PROCEDURE GetAllProducts(
+	IN id INT
+)
+BEGIN
+    SELECT p.*, c.name AS ctg_name
+    FROM product p
+    JOIN category c ON p.ctg_id = c.ctg_id
+    WHERE p.shop_id = id;
+END //
+DELIMITER ;
+
+-- Stored procedure to get all catergories
+DELIMITER //
+CREATE PROCEDURE GetCategories()
+BEGIN
+    SELECT * FROM category;
+END //
+DELIMITER ;
+
+
+-- Stored procedure to add a new product
+DELIMITER //
+CREATE PROCEDURE InsertProduct(
+    IN p_shop_id INT,
+    IN p_ctg_id INT,
+    IN p_name VARCHAR(100),
+    IN p_SKU VARCHAR(100),
+    IN p_price DECIMAL(14, 2),
+    IN p_stock INT,
+    IN p_description TEXT,
+    IN p_image TEXT
+)
+BEGIN
+    -- Kiểm tra giá và số lượng tồn kho là số dương
+    IF p_price <= 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Giá sản phẩm phải lớn hơn 0';
+    END IF;
+
+    IF p_stock <= 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Số lượng tồn kho phải lớn hơn 0';
+    END IF;
+
+    -- Thực hiện thêm sản phẩm
+    INSERT INTO product (shop_id, ctg_id, name, SKU, price, stock, description, image)
+    VALUES (p_shop_id, p_ctg_id, p_name, p_SKU, p_price, p_stock, p_description, p_image);
+END //
+DELIMITER ;
+
 
 -- Tạo stored procedure để cập nhật thông tin sản phẩm
 DELIMITER //
