@@ -4,7 +4,6 @@ use e_commerce;
 
 drop table if exists refund;
 drop table if exists review;
-drop table if exists review;
 drop table if exists shipment_address;
 drop table if exists shipment;
 drop table if exists bill_product;
@@ -31,7 +30,7 @@ create table users (
     last_name varchar(30) not null,
 	user_type varchar(10) not null,
     email varchar(100) not null,
-    password varchar(32) not null,
+    user_password varchar(32) not null,
     constraint user_type check (user_type in ('CUSTOMER', 'SELLER', 'SHIPPER', 'ADMIN'))
 );
 
@@ -42,7 +41,7 @@ create table customer (
 
 create table shipping_company (
 	company_id int not null primary key auto_increment,
-    name varchar(100) not null,
+    company_name varchar(100) not null,
     address text,
     phone_num varchar(12) not null unique
 );
@@ -64,7 +63,7 @@ create table shop (
 
 create table category (
 	ctg_id int not null primary key auto_increment,
-    name varchar(100) not null
+    ctg_name varchar(100) not null
 );
 
 create table product (
@@ -72,7 +71,7 @@ create table product (
 	product_id int not null primary key auto_increment,
     shop_id int not null,
     ctg_id int not null,
-    name varchar(1000) not null,
+    product_name varchar(1000) not null,
     SKU varchar(10) not null unique,
     upload_date date not null default (curdate()),
 	price decimal(14,2) not null,
@@ -80,7 +79,7 @@ create table product (
 
     stock int not null,
 	sold_quantities int not null default 0,
-    description text,
+    product_description text,
     image text,
 
 
@@ -102,7 +101,7 @@ create table wish_item (
 
 create table promotion (
 	promotion_id varchar(20) not null primary key,
-    name varchar(100) not null,
+    promotion_name varchar(100) not null,
     start_date date not null,
     end_date date not null,
     promotion_type varchar (16) not null,
@@ -158,7 +157,7 @@ create table payment (
 	order_id int not null,
     amount decimal(12,2) not null,
     method_id int not null,
-    timestamp datetime not null default current_timestamp,
+    payment_timestamp datetime not null default current_timestamp,
     constraint method_payment_fk foreign key (method_id) references method (method_id) on update no action on delete no action
 );
 
@@ -169,7 +168,7 @@ create table bill (
     voucher_id varchar(20) default null,
     order_date date not null default (curdate()),
     total_price decimal(12,2) not null,
-    status varchar(35) not null,
+    bill_status varchar(35) not null,
     constraint oder_bill_fk foreign key (order_id) references orders (order_id) on update cascade on delete cascade,
     constraint shop_bill_fk foreign key (shop_id) references shop (user_id) on update no action on delete no action,
     constraint voucher_bill_fk foreign key (voucher_id) references voucher (voucher_id) on update cascade on delete cascade
@@ -191,12 +190,12 @@ create table shipment (
     shipper_id int not null,
     shipping_free decimal(10,2) not null,
     phone_num varchar(12) not null,
-    status varchar(12) not null,
+    shipment_status varchar(12) not null,
     estimated_time date default (curdate()),
     constraint voucher_shipment_fk foreign key (voucher_id) references voucher (voucher_id) on update no action on delete no action,
     constraint bill_shipment_fk foreign key (bill_id) references bill (bill_id) on update no action on delete cascade,
     constraint shipper_shipment_fk foreign key (shipper_id) references shipper (user_id) on update no action on delete no action,
-    constraint shipment_status check (status in ('COMPLETE', 'INCOMPLETE', 'DELIVERING'))
+    constraint shipment_status check (shipment_status in ('COMPLETE', 'INCOMPLETE', 'DELIVERING'))
 );
 
 create table shipment_address (
@@ -214,7 +213,7 @@ create table review (
     product_id int not null,
     post_date datetime not null default current_timestamp,
     rating decimal(2,1),
-    comment text,
+    review_comment text,
     constraint customer_review_fk foreign key (cus_id) references customer (user_id),
     constraint product_review_fk foreign key (product_id) references product (product_id) on update no action on delete cascade,
     constraint rating_check check(rating >= 0 and rating <= 5)
@@ -226,10 +225,9 @@ create table refund (
     bill_id int not null,
     reason text,
     amount decimal(12,2) not null,
-    date date not null default (curdate()),
-    status varchar(32) not null,
+    refund_date date not null default (curdate()),
+    refund_status varchar(32) not null,
     constraint customer_refund_fk foreign key (cus_id) references customer (user_id) on update no action on delete cascade,
     constraint bill_refund_fk foreign key (bill_id) references bill (bill_id) on update no action on delete no action,
-    constraint refund_status check (status in ('WAIT FOR CONFIRMATION', 'CONFIRMED', 'REFUSED'))
+    constraint refund_status check (refund_status in ('WAIT FOR CONFIRMATION', 'CONFIRMED', 'REFUSED'))
 );
-

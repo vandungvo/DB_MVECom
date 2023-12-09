@@ -4,7 +4,7 @@ LOAD DATA LOCAL INFILE 'c:/users/admin/Documents/hcsdl/DB_MVECom/data/users.csv'
 INTO TABLE users
 FIELDS TERMINATED BY ',' 
 IGNORE 1 ROWS
-(user_id,first_name,last_name,user_type,email,password);
+(user_id,first_name,last_name,user_type,email,user_password);
 
 LOAD DATA LOCAL INFILE 'c:/users/admin/Documents/hcsdl/DB_MVECom/data/customer.csv' 
 INTO TABLE customer
@@ -22,7 +22,7 @@ LOAD DATA LOCAL INFILE 'c:/users/admin/Documents/hcsdl/DB_MVECom/data/shipping_c
 INTO TABLE shipping_company
 FIELDS TERMINATED BY ',' 
 IGNORE 1 ROWS
-(company_id,name,address,phone_num);
+(company_id,company_name,address,phone_num);
 
 LOAD DATA LOCAL INFILE 'c:/users/admin/Documents/hcsdl/DB_MVECom/data/shipper.csv' 
 INTO TABLE shipper
@@ -33,7 +33,7 @@ LOAD DATA LOCAL INFILE 'c:/users/admin/Documents/hcsdl/DB_MVECom/data/category.c
 INTO TABLE category
 FIELDS TERMINATED BY ',' 
 IGNORE 1 ROWS
-(ctg_id,name);
+(ctg_id,ctg_name);
 
 delete from product;
 LOAD DATA LOCAL INFILE 'c:/users/admin/Documents/hcsdl/DB_MVECom/data/product.csv' 
@@ -42,7 +42,7 @@ character set latin1
 FIELDS TERMINATED BY ',' 
 lines terminated by '\r\n'
 IGNORE 1 ROWS
-(product_id,shop_id,ctg_id,name,SKU,upload_date,price,stock,sold_quantities,description,image,rating,rate_nums);
+(product_id,shop_id,ctg_id,product_name,SKU,upload_date,price,stock,sold_quantities,product_description,image,rating,rate_nums);
 
 LOAD DATA LOCAL INFILE 'c:/users/admin/Documents/hcsdl/DB_MVECom/data/orders.csv' 
 INTO TABLE orders
@@ -54,11 +54,10 @@ LOAD DATA LOCAL INFILE 'c:/users/admin/Documents/hcsdl/DB_MVECom/data/bill.csv'
 INTO TABLE bill
 FIELDS TERMINATED BY ',' 
 IGNORE 1 ROWS 
-(bill_id, order_id, shop_id, order_date, total_price, status);
+(bill_id, order_id, shop_id, order_date, total_price, bill_status);
 
 LOAD DATA LOCAL INFILE 'c:/users/admin/Documents/hcsdl/DB_MVECom/data/bill_product.csv' 
 INTO TABLE bill_product
 FIELDS TERMINATED BY ',' 
 IGNORE 1 ROWS
 (bill_id,product_id,quantity);
-
