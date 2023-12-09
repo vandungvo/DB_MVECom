@@ -57,7 +57,7 @@ BEGIN
     END IF;
 
     -- Thực hiện thêm sản phẩm
-    INSERT INTO product (shop_id, ctg_id, name, SKU, price, stock, description, image)
+    INSERT INTO product (shop_id, ctg_id, product_name, SKU, price, stock, product_description, image)
     VALUES (p_shop_id, p_ctg_id, p_name, p_SKU, p_price, p_stock, p_description, p_image);
 END //
 DELIMITER ;
