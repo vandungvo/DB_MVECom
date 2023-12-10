@@ -52,7 +52,7 @@ create table shipper (
     company_id int not null,
 	phone_num varchar(12) not null unique,
     constraint user_shipper_fk foreign key (user_id) references users (user_id) on update cascade on delete cascade,
-    constraint company_shipper_fk foreign key (company_id) references shipping_company (company_id) 
+    constraint company_shipper_fk foreign key (company_id) references shipping_company (company_id) on update cascade
 );
 
 create table shop (
@@ -82,7 +82,7 @@ create table product  (
     rating decimal(2, 1) default 0,
 	rate_nums int default 0,
     constraint shop_product_fk foreign key (shop_id) references shop (user_id) on update cascade on delete cascade, 
-    constraint ctg_product_fk foreign key (ctg_id) references category (ctg_id) on update cascade on delete no action
+    constraint ctg_product_fk foreign key (ctg_id) references category (ctg_id) on update cascade
 );
 
 create table wish_item (
@@ -90,7 +90,7 @@ create table wish_item (
     cus_id int not null,
     product_id int not null,
     constraint cus_wish_fk foreign key (cus_id) references customer (user_id) on update cascade on delete cascade,
-    constraint product_wish_fk foreign key (product_id) references product (product_id)
+    constraint product_wish_fk foreign key (product_id) references product (product_id) on update cascade on delete cascade
 );
 
 create table promotion (
@@ -106,14 +106,14 @@ create table promotion (
 create table shop_promotion (
 	promotion_id varchar(20) not null,
     shop_id int not null,
-    constraint promotion_fk foreign key  (promotion_id) references promotion (promotion_id) on update cascade on delete no action, 
+    constraint promotion_fk foreign key  (promotion_id) references promotion (promotion_id) on update cascade on delete cascade, 
     constraint shop_promotion_fk foreign key (shop_id) references shop (user_id) on update cascade on delete cascade
 );
 
 create table sale (
 	sale_id varchar(20) not null primary key,
     product_id int not null,
-    constraint promotion_sale_fk foreign key (sale_id) references promotion (promotion_id) on update cascade on delete no action,
+    constraint promotion_sale_fk foreign key (sale_id) references promotion (promotion_id) on update cascade on delete cascade,
     constraint product_sale_fk foreign key (product_id) references product (product_id) on update cascade on delete cascade
 );
 
@@ -122,7 +122,7 @@ create table voucher (
     cus_id int not null,
     voucher_code varchar(50) not null,
     max_amount int not null,
-    constraint promotion_voucher_fk foreign key (voucher_id) references promotion (promotion_id) on update cascade on delete no action,
+    constraint promotion_voucher_fk foreign key (voucher_id) references promotion (promotion_id) on update cascade on delete cascade,
     constraint promotion_customer_fk foreign key (cus_id) references customer (user_id) on update cascade on delete cascade
 );
 
@@ -131,7 +131,7 @@ create table orders (
     cus_id int not null,
     total_price decimal(12, 2) not null default 0,
     order_date date not null default(curdate()),
-    constraint customer_order_fk foreign key (cus_id) references customer (user_id) on update cascade on delete cascade
+    constraint customer_order_fk foreign key (cus_id) references customer (user_id) on update cascade
 );
 
 create table method (
@@ -152,7 +152,7 @@ create table payment (
     amount decimal(12,2) not null,
     method_id int not null,
     payment_timestamp datetime not null default current_timestamp,
-    constraint method_payment_fk foreign key (method_id) references method (method_id) on update no action on delete no action
+    constraint method_payment_fk foreign key (method_id) references method (method_id)
 );
 
 create table status_table (
@@ -178,8 +178,8 @@ create table bill (
     total_price decimal(12,2) not null default 0,
     bill_status varchar(35) not null default 'complete',
     constraint oder_bill_fk foreign key (order_id) references orders (order_id) on update cascade on delete cascade,
-    constraint shop_bill_fk foreign key (shop_id) references shop (user_id) on update no action on delete no action,
-    constraint voucher_bill_fk foreign key (voucher_id) references voucher (voucher_id) on update cascade on delete cascade,
+    constraint shop_bill_fk foreign key (shop_id) references shop (user_id) on update cascade on delete cascade,
+    constraint voucher_bill_fk foreign key (voucher_id) references voucher (voucher_id),
     constraint bill_status_fk foreign key (bill_status) references status_table (status_id)
 );
 
@@ -188,8 +188,8 @@ create table bill_product (
     product_id int,
     quantity int not null,
     constraint bil_product_fk primary key (bill_id, product_id),
-    constraint bill_fk foreign key (bill_id) references bill (bill_id) on update no action on delete cascade,
-    constraint product_fk foreign key (product_id) references product (product_id) on update no action on delete no action
+    constraint bill_fk foreign key (bill_id) references bill (bill_id) on update cascade on delete cascade,
+    constraint product_fk foreign key (product_id) references product (product_id) on update cascade on delete cascade
 );
 
 create table shipment (
@@ -201,9 +201,9 @@ create table shipment (
     phone_num varchar(12) not null,
     shipment_status int not null,
     estimated_time date default (curdate()),
-    constraint voucher_shipment_fk foreign key (voucher_id) references voucher (voucher_id) on update no action on delete no action,
-    constraint bill_shipment_fk foreign key (bill_id) references bill (bill_id) on update no action on delete cascade,
-    constraint shipper_shipment_fk foreign key (shipper_id) references shipper (user_id) on update no action on delete no action,
+    constraint voucher_shipment_fk foreign key (voucher_id) references voucher (voucher_id),
+    constraint bill_shipment_fk foreign key (bill_id) references bill (bill_id) on update cascade on delete cascade,
+    constraint shipper_shipment_fk foreign key (shipper_id) references shipper (user_id) on update cascade on delete cascade,
 	constraint shipment_status_fk foreign key (shipment_status) references status_table (status_id)
 );
 
@@ -213,7 +213,7 @@ create table shipment_address (
     district varchar(20),
     city varchar(20) not null,
     note text,
-    constraint shipment_fk foreign key (shipment_id) references shipment (shipment_id) on update no action on delete cascade
+    constraint shipment_fk foreign key (shipment_id) references shipment (shipment_id) on delete cascade
 );
 
 create table review (
@@ -223,8 +223,8 @@ create table review (
     post_date datetime not null default current_timestamp,
     rating decimal(2,1),
     review_comment text,
-    constraint customer_review_fk foreign key (cus_id) references customer (user_id),
-    constraint product_review_fk foreign key (product_id) references product (product_id) on update no action on delete cascade,
+    constraint customer_review_fk foreign key (cus_id) references customer (user_id) on update cascade on delete cascade,
+    constraint product_review_fk foreign key (product_id) references product (product_id) on delete cascade,
     constraint rating_check check(rating >= 0 and rating <= 5)
 );
 
@@ -236,6 +236,6 @@ create table refund (
     amount decimal(12,2) not null,
     refund_date date not null default (curdate()),
     refund_status int not null,
-    constraint customer_refund_fk foreign key (cus_id) references customer (user_id) on update no action on delete cascade,
-    constraint bill_refund_fk foreign key (bill_id) references bill (bill_id) on update no action on delete no action
+    constraint customer_refund_fk foreign key (cus_id) references customer (user_id) on update cascade on delete cascade,
+    constraint bill_refund_fk foreign key (bill_id) references bill (bill_id) on delete cascade
 );

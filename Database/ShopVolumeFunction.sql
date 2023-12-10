@@ -18,13 +18,13 @@ BEGIN
     
     SELECT COUNT(*) INTO total_shop FROM shop;
     IF total_shop = 0 THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Lỗi: Chưa có shop nào được thêm vào';
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ERROR: No Shop Found';
 	END IF;
     IF start_date > end_date THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Lỗi: Ngày không hợp lệ';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ERROR: Invalid Date';
     END IF;
     IF end_date > NOW() THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Lỗi: Ngày không hợp lệ';
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ERROR: Invalid Date';
 	END IF;
     
     SET result_msg = CONCAT("---------", "VOLUME OF SHOPS FROM ", start_date, " TO ", end_date, "---------\n");
@@ -44,6 +44,5 @@ BEGIN
     CLOSE shop_access;
     RETURN result_msg;
 END //
-
 DELIMITER ;
 SELECT ShopVolume('2023-01-01', '2023-12-10');
