@@ -15,13 +15,8 @@ const getUser = (shop_id, controller) => {
 const getShopName = (shop_id, controller) => {
     const query = `CALL GetShopName(${shop_id})`;
     connect_DB.query(query, (err, result) => {
-        if (err) {
-            console.error(err);
-            controller(err, null);
-        } else { 
-            controller(null, result[0]);
-        }
-    });
+        controller(err, result);
+    })
 }
 
 const getCategories = (controller) => {
@@ -53,13 +48,8 @@ const insertProduct = (product, controller) => {
         ${product.shop_id}, ${product.ctg_id}, '${product.name}', '${product.SKU}', 
         ${product.price}, ${product.stock}, '${product.description}', '${product.image}'
     )`;
-    connect_DB.query(query, (err, result) => {
-        if (err) {
-            console.error(err.message);
-            controller(err, null);
-        } else {
-           controller(null, result[0]);
-        }
+    connect_DB.query(query, function (err, result) {
+        controller(err, result);
     });
 }
 

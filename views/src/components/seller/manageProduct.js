@@ -1,96 +1,60 @@
 import React from 'react';
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Link, NavLink, Outlet, Navigate, useNavigate } from "react-router-dom";
-import $ from 'jquery';
-import Popper from 'popper.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import axios from 'axios'
 import { useState, useEffect } from "react";
-import Header from '../shared/header';
 import Cookies from "universal-cookie";
 import './manageProduct.css';
 
 const cookies = new Cookies();
+const shop_id = cookies.get("USER_ID") || null;
 
 function ManageProduct() {
-    const shop_id = cookies.get("USER_ID") || null;
-    const [reFresh, setReFresh] = useState(0);
+    // view all products in shop
+    const [reFresh, setReFresh] = useState(null);
     const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        axios.post('/api/shop/viewProduct', { shop_id })
+        .then(response => setProducts(response.data) )
+        .catch(error => console.error('Error fetching products:', error));
+    }, [reFresh]);
+
+    // insert and update a product
     const [product_id, setProductId] = useState('');
-    const [categories, setCategories] = useState([]);
-    const [addPopup, setAddPopup] = useState(false);
-    const [updatePopup, setUpdatePopup] = useState(false);
     const [ctg_id, setCtgId] = useState('');
+    const [categories, setCategories] = useState([]);
     const [name, setName] = useState('');
     const [SKU, setSKU] = useState('');
     const [price, setPrice] = useState('');
     const [stock, setStock] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
-
-    useEffect(() => {
-        axios.post('/api/shop/viewProduct', {
-            shop_id
-        })
-        .then(response => {
-            setProducts(response.data);
-        })
-        .catch(error => console.error('Error fetching products:', error));
-    }, [reFresh]);
-
+    const [error, setError] = useState(null);
+    
+    // insert
+    const [addPopup, setAddPopup] = useState(false);
     const handleAddButtonClick = () => {
+        axios.post('/api/shop/getCategories')
+        .then( response => setCategories(response.data) )
+        .catch( err => setError(err.response.data.message) );
         setAddPopup(true);
     }
-
-    const handleAddPopupClose = () => {
-        setAddPopup(false);
-
-    }
-
-    const handleInsertProductSubmit = () => {
-        axios.post('/api/shop/insertProduct', {
-            shop_id,
-            ctg_id,
-            name,
-            SKU,
-            price,
-            stock,
-            description,
-            image})
-        .then( setReFresh(prev => prev + 1) )
-        .catch(error => {
-            console.error('Error: ', error.message);
-            console.log(ctg_id);
-        });
-
-        axios.post('/api/shop/getCategories')
-        .then(response => {
-            setCategories(response.data);
-        }).catch(error => console.error('Error fetching categories:', error));
-
+    const handleAddPopupClose = () => { setAddPopup(false); }
+    const handleInsertProductSubmit = (e) => {
+        e.preventDefault();
+        axios.post('/api/shop/insertProduct', { shop_id, ctg_id, name, SKU, price, stock, description, image })
+        .then((response) => { setReFresh(prev => prev + 1); setError(null); })
+        .catch(err => setError(err.response.data.message) );
     };
-    
-    const handleUpdateProduct = (product_id) => {
-        setProductId(product_id);
-        setUpdatePopup(true);
-    }
 
-    const handleUpdatePopupClose = () => {
-        setUpdatePopup(false);
-    }
-
+    // update
+    const [updatePopup, setUpdatePopup] = useState(false);
+    const handleUpdateButtonClick = (product_id) => { setProductId(product_id); setUpdatePopup(true); }
+    const handleUpdatePopupClose = () => { setUpdatePopup(false); }
     const handleUpdateProductSubmit = () => {
-        axios.post('/api/shop/updateProduct', {
-            product_id,
-            ctg_id,
-            name,
-            SKU,
-            price,
-            stock,
-            description,
-            image})
-        .then( setReFresh(prev => prev + 1) )
+        axios.post('/api/shop/updateProduct', { product_id, ctg_id, name, SKU, price, stock, description, image})
+        .then((response) => { setReFresh(prev => prev + 1); setError(null); })
         .catch(error => {
             console.error('Error: ', error.message);
             console.log(ctg_id);
@@ -130,7 +94,7 @@ function ManageProduct() {
                             <td className='text-center'>{product.SKU}</td>
                             <td className='text-center'>{product.sold_quantities}</td>
                             <td className='text-center'>
-                                <button className='modifyButton' onClick={() => handleUpdateProduct(product.product_id)}>
+                                <button className='modifyButton' onClick={() => handleUpdateButtonClick(product.product_id)}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-down-left" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M9.636 2.5a.5.5 0 0 0-.5-.5H2.5A1.5 1.5 0 0 0 1 3.5v10A1.5 1.5 0 0 0 2.5 15h10a1.5 1.5 0 0 0 1.5-1.5V6.864a.5.5 0 0 0-1 0V13.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
                                         <path fill-rule="evenodd" d="M5 10.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 0-1H6.707l8.147-8.146a.5.5 0 0 0-.708-.708L6 9.293V5.5a.5.5 0 0 0-1 0z"/>
@@ -241,6 +205,7 @@ function ManageProduct() {
                     <button className="btn btn-danger mt-2 mx-5" onClick={handleAddPopupClose}>Huỷ</button>
                     <button className="btn btn-primary mt-2 mx-5" onClick={handleInsertProductSubmit}>Xác nhận</button>
                     </form>
+                    {error && (<p className="text-danger">{error}</p>)}
                 </div>
                 </div>
             )}
@@ -332,7 +297,7 @@ function ManageProduct() {
                             </tr>
                         </tbody>
                     </table>
-                    <button className="btn btn-danger mt-2 mx-5" onClick={handleAddPopupClose}>Huỷ</button>
+                    <button className="btn btn-danger mt-2 mx-5" onClick={handleUpdatePopupClose}>Huỷ</button>
                     <button className="btn btn-primary mt-2 mx-5" onClick={handleUpdateProductSubmit}>Xác nhận</button>
                     </form>
                 </div>

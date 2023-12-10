@@ -61,8 +61,7 @@ const insertProduct = (req, res) => {
     };
     shop_model.insertProduct(product, function (err, result) {
         if (err) {
-            console.error(err.message);
-            res.status(500).send(err);
+            res.status(500).json({ message: err.message });
         } else {
             res.json({ message: "Successfully add product!" });
         }
