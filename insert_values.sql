@@ -25,6 +25,12 @@ values
 	(29,	'Thang', 'Pham', 'SHIPPER', 'thangphamshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
 	(48,	'Khoa', 'Huynh', 'SHIPPER', 'khoahuynhshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy');
 
+LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/users.csv' 
+INTO TABLE users
+FIELDS TERMINATED BY ',' 
+IGNORE 1 ROWS
+(user_id,first_name,last_name,user_type,email,user_password);
+
 LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/customer.csv' 
 INTO TABLE customer
 FIELDS TERMINATED BY ',' 
@@ -56,11 +62,47 @@ IGNORE 1 ROWS
 
 LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/product.csv' 
 INTO TABLE product
-character set latin1
+CHARACTER SET latin1
 FIELDS TERMINATED BY ',' 
-lines terminated by '\r\n'
+lines terminated by '\n'
 IGNORE 1 ROWS
 (product_id,shop_id,ctg_id,product_name,SKU,upload_date,price,stock,sold_quantities,product_description,image,rating,rate_nums);
+
+LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/wish_item.csv' 
+INTO TABLE wish_item
+FIELDS TERMINATED BY ',' 
+IGNORE 1 ROWS
+(wish_id,cus_id,product_id);
+
+LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/promotion.csv' 
+INTO TABLE promotion
+FIELDS TERMINATED BY ',' 
+IGNORE 1 ROWS
+(promotion_id,promotion_name,start_date,end_date,promotion_type,discount_percen);
+
+LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/shop_promotion.csv' 
+INTO TABLE shop_promotion
+FIELDS TERMINATED BY ',' 
+IGNORE 1 ROWS
+(promotion_id,shop_id);
+
+LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/sale.csv' 
+INTO TABLE sale
+FIELDS TERMINATED BY ',' 
+IGNORE 1 ROWS
+(sale_id,product_id);
+
+LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/voucher.csv' 
+INTO TABLE voucher
+FIELDS TERMINATED BY ',' 
+IGNORE 1 ROWS
+(voucher_id,cus_id,voucher_code,max_amount);
+
+LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/payment.csv' 
+INTO TABLE payment
+FIELDS TERMINATED BY ',' 
+IGNORE 1 ROWS
+(order_id,amount,method_id,payment_timestamp);
 
 LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/orders.csv' 
 INTO TABLE orders
@@ -79,3 +121,28 @@ INTO TABLE bill_product
 FIELDS TERMINATED BY ',' 
 IGNORE 1 ROWS
 (bill_id,product_id,quantity);
+
+LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/shipment.csv' 
+INTO TABLE shipment
+FIELDS TERMINATED BY ',' 
+IGNORE 1 ROWS
+(shipment_id,bill_id,shipper_id,shipping_fee,phone_num,shipment_status,estimated_time);
+
+LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/shipment_address.csv' 
+INTO TABLE shipment_address
+FIELDS TERMINATED BY ',' 
+IGNORE 1 ROWS
+(shipment_id,street_address,district,city,note);
+
+LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/review.csv' 
+INTO TABLE review
+CHARACTER SET latin1
+FIELDS TERMINATED BY ',' 
+IGNORE 1 ROWS
+(review_id,cus_id,product_id,post_date,rating,review_comment);
+
+LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/refund.csv' 
+INTO TABLE refund
+FIELDS TERMINATED BY ',' 
+IGNORE 1 ROWS
+(refund_id,cus_id,bill_id,reason,amount,refund_date,refund_status);
