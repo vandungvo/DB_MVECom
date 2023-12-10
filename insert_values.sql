@@ -5,25 +5,25 @@ set global local_infile = true;
 insert into users 
 values 
 	-- admin
-	(1,	'Dung',	'Vo', 'ADMIN', 'dungvoadmin@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
-	(12, 'Ky', 'Vo', 'ADMIN', 'kyvoadmin@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
-	(28, 'Thang', 'Pham', 'ADMIN', 'thangphamadmin@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
-	(69, 'Khoa', 'Huynh', 'ADMIN', 'khoahuynhadmin@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1001,	'Dung',	'Vo', 'ADMIN', 'dungvoadmin@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1012, 'Ky', 'Vo', 'ADMIN', 'kyvoadmin@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1028, 'Thang', 'Pham', 'ADMIN', 'thangphamadmin@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1069, 'Khoa', 'Huynh', 'ADMIN', 'khoahuynhadmin@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
 	-- customers
-    (2,	'Dung',	'Vo', 'CUSTOMER', 'dungvo@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
-	(3,	'Ky', 'Vo', 'CUSTOMER', 'kyvo@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
-	(4,	'Thang', 'Pham', 'CUSTOMER', 'thangpham@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
-	(5,	'Khoa', 'Huynh', 'CUSTOMER', 'khoahuynh@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+        (1002,	'Dung',	'Vo', 'CUSTOMER', 'dungvo@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1003,	'Ky', 'Vo', 'CUSTOMER', 'kyvo@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1004,	'Thang', 'Pham', 'CUSTOMER', 'thangpham@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1005,	'Khoa', 'Huynh', 'CUSTOMER', 'khoahuynh@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
     -- seller
-	(14,	'Dung',	'Vo', 'SELLER', 'dungvoshop@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
-	(15,	'Ky', 'Vo', 'SELLER', 'kyvoshop@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
-	(21,	'Thang', 'Pham', 'SELLER', 'thangphamshop@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
-	(22,	'Khoa', 'Huynh', 'SELLER', 'khoahuynhshop@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1014,	'Dung',	'Vo', 'SELLER', 'dungvoshop@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1015,	'Ky', 'Vo', 'SELLER', 'kyvoshop@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1021,	'Thang', 'Pham', 'SELLER', 'thangphamshop@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1022,	'Khoa', 'Huynh', 'SELLER', 'khoahuynhshop@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
     -- shipper
-	(11,	'Dung',	'Vo', 'SHIPPER', 'dungvoshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
-	(23,	'Ky', 'Vo', 'SHIPPER', 'kyvoshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
-	(29,	'Thang', 'Pham', 'SHIPPER', 'thangphamshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
-	(48,	'Khoa', 'Huynh', 'SHIPPER', 'khoahuynhshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy');
+	(1011,	'Dung',	'Vo', 'SHIPPER', 'dungvoshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1023,	'Ky', 'Vo', 'SHIPPER', 'kyvoshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1029,	'Thang', 'Pham', 'SHIPPER', 'thangphamshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy'),
+	(1048,	'Khoa', 'Huynh', 'SHIPPER', 'khoahuynhshipper@gmail.com', '$2b$10$vPfiwJdRbJsMV04pbav0TOry.VJe9Of6Gdo08d0mVh9VMpjpJUJHy');
 
 LOAD DATA LOCAL INFILE 'C:/Users/Admin/OneDrive/Desktop/DB_MVECom/data/users.csv' 
 INTO TABLE users
