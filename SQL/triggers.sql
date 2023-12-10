@@ -52,7 +52,7 @@ INSERT INTO orders(cus_id, total_price)
 VALUES (2, 0);
 
 INSERT INTO bill(order_id, shop_id, total_price, bill_status) 
-VALUES (3014, 21, 0, 'Pending');
+VALUES (3014, 21, 0, 3);
 
 INSERT INTO bill_product(bill_id, product_id, quantity) 
 VALUES (4040, 10005, 10);
