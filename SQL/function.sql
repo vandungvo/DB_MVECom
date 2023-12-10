@@ -1,5 +1,7 @@
 USE e_commerce;
 
+USE e_commerce;
+
 DROP FUNCTION IF EXISTS ShopVolume;
 DELIMITER //
 CREATE FUNCTION ShopVolume(start_date DATE, end_date DATE) 
@@ -13,17 +15,17 @@ BEGIN
     DECLARE result_msg TEXT DEFAULT "";
     DECLARE total_shop INT;
     DECLARE shop_access CURSOR FOR 
-		SELECT user_id FROM shop ORDER BY user_id ASC;
-	DECLARE CONTINUE HANDLER FOR NOT FOUND SET DONE = TRUE;
+	SELECT user_id FROM shop ORDER BY user_id ASC;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET DONE = TRUE;
     
     SELECT COUNT(*) INTO total_shop FROM shop;
     IF total_shop = 0 THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Lỗi: Chưa có shop nào được thêm vào';
 	END IF;
-    IF end_date > NOW() THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Lỗi: Ngày không hợp lệ';
-	END IF;
     IF start_date > end_date THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Lỗi: Ngày không hợp lệ';
+    END IF;
+    IF end_date > NOW() THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Lỗi: Ngày không hợp lệ';
 	END IF;
     
@@ -35,7 +37,7 @@ BEGIN
 			LEAVE read_loop;
 		END IF;
         SELECT SUM(total_price) INTO shop_volume FROM bill 
-			WHERE shop_id = shop_access_id AND order_date >= start_date AND order_date <= end_date AND bill_status = 'COMPLETE';
+			WHERE shop_id = shop_access_id AND order_date >= start_date AND order_date <= end_date AND bill_status = 1;
         IF shop_volume IS NULL THEN
 			SET shop_volume = 0;
 		END IF;
@@ -44,7 +46,6 @@ BEGIN
     CLOSE shop_access;
     RETURN result_msg;
 END //
-
 DELIMITER ;
 
 CREATE FUNCTION ShopReport(shop_id INT,start_date DATE, end_date DATE) 
