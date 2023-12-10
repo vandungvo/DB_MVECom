@@ -176,7 +176,7 @@ create table bill (
     voucher_id varchar(20) default null,
     order_date date not null default (curdate()),
     total_price decimal(12,2) not null default 0,
-    bill_status varchar(35) not null default 'complete',
+    bill_status int not null default 3,
     constraint oder_bill_fk foreign key (order_id) references orders (order_id) on update cascade on delete cascade,
     constraint shop_bill_fk foreign key (shop_id) references shop (user_id) on update cascade on delete cascade,
     constraint voucher_bill_fk foreign key (voucher_id) references voucher (voucher_id),
@@ -199,7 +199,7 @@ create table shipment (
     shipper_id int not null,
     shipping_fee decimal(10,2) not null,
     phone_num varchar(12) not null,
-    shipment_status int not null,
+    shipment_status int not null default 3,
     estimated_time date default (curdate()),
     constraint voucher_shipment_fk foreign key (voucher_id) references voucher (voucher_id),
     constraint bill_shipment_fk foreign key (bill_id) references bill (bill_id) on update cascade on delete cascade,
@@ -235,7 +235,7 @@ create table refund (
     reason text,
     amount decimal(12,2) not null,
     refund_date date not null default (curdate()),
-    refund_status int not null,
+    refund_status int not null default 3,
     constraint customer_refund_fk foreign key (cus_id) references customer (user_id) on update cascade on delete cascade,
     constraint bill_refund_fk foreign key (bill_id) references bill (bill_id) on delete cascade
 );
