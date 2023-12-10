@@ -31,7 +31,7 @@ function SignIn() {
                 window.location.reload();
             }, 100);
             if (response.data.member.user_type == "CUSTOMER") {
-                navigate("/publicTest")
+                navigate("/shop")
             }
             else if (response.data.member.user_type == "SELLER") {
                 cookies.set("USER_ID", userId, { path: "/" });

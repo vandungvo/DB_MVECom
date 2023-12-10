@@ -37,12 +37,6 @@ function ManageProduct() {
             setProducts(response.data);
         })
         .catch(error => console.error('Error fetching products:', error));
-
-        axios.post('/api/shop/getCategories')
-        .then(response => {
-            setCategories(response.data);
-        }).catch(error => console.error('Error fetching categories:', error));
-
     }, [reFresh]);
 
     const handleAddButtonClick = () => {
@@ -69,6 +63,12 @@ function ManageProduct() {
             console.error('Error: ', error.message);
             console.log(ctg_id);
         });
+
+        axios.post('/api/shop/getCategories')
+        .then(response => {
+            setCategories(response.data);
+        }).catch(error => console.error('Error fetching categories:', error));
+
     };
     
     const handleUpdateProduct = (product_id) => {

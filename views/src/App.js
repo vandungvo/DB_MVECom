@@ -15,6 +15,7 @@ import ProtectedTest from './components/(test_only)protected_test/protected_test
 import PublicTest from './components/(test_only)public_test/public_test';
 import SignUp from './components/signup/signup';
 import ManageProduct from './components/seller/manageProduct';
+import ManageProfile from './components/seller/manageProfile';
 import ShopPage from './components/shoppage/ShopPage';
 import ProductPage from './components/shoppage/ProductPage';
 import CartPage from './components/shoppage/CartPage';
@@ -31,7 +32,7 @@ function App() {
           <Route path='protectedTest' element={<ProtectedTest />} />
         </Route>
         <Route path='manageProduct' element={<ManageProduct/>} />
-
+        <Route path='manageProfile' element={<ManageProfile />} />
         <Route path='shop' element={<ShopPage />} />
         <Route path='shop/:keyword' element={<ShopPage />} />
         <Route path='product/:id' element={<ProductPage />} />
