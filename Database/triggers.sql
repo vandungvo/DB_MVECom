@@ -15,6 +15,8 @@ END //
 DELIMITER ;
 
 DROP TRIGGER IF EXISTS after_bill_product_insert;
+
+
 -- bill trigger
 DELIMITER //
 CREATE TRIGGER after_bill_product_insert
