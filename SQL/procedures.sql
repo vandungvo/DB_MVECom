@@ -1,9 +1,10 @@
+drop procedure if exists GetProductsByCategory;
+drop procedure if exists GetOrderHistory;
 use e_commerce;
 
 DELIMITER //
 CREATE PROCEDURE GetProductsByCategory(IN categoryName VARCHAR(100))
 BEGIN
-    DECLARE no_rows CONDITION FOR SQLSTATE '02000';
     DECLARE no_rows CONDITION FOR SQLSTATE '02000';
 
     DECLARE EXIT HANDLER FOR no_rows
@@ -25,7 +26,6 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE GetOrderHistory(user_id INT,start_date DATE, end_date DATE)
 BEGIN
-    DECLARE no_rows CONDITION FOR SQLSTATE '02000';
     DECLARE no_rows CONDITION FOR SQLSTATE '02000';
 
     DECLARE EXIT HANDLER FOR no_rows

@@ -17,6 +17,7 @@ export default function Navbar() {
     const [signin, setSignIn] = useState(false);
     const [user_type, setUserType] = useState(null);
     const shop_id = cookies.get("USER_ID") || null;
+    console.log(shop_id);
 
     useEffect(() => {
         const token = cookies.get("TOKEN");
