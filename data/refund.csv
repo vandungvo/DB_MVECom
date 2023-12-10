@@ -1,0 +1,3 @@
+refund_id,cus_id,bill_id,reason,amount,refund_date,refund_status
+50001,5,4017,not enough money,5421.95,2023-05-04,6
+50002,2,4035,sudden reason,699,2023-10-03,6
