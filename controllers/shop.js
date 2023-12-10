@@ -57,10 +57,45 @@ const insertProduct = (req, res) => {
     })
 };
 
+const updateProduct = (req, res) => {
+    let product = {
+        product_id: req.body.product_id,
+        ctg_id: req.body.ctg_id,
+        name: req.body.name,
+        SKU: req.body.SKU,
+        price: req.body.price,
+        stock: req.body.stock,
+        description: req.body.description,
+        image: req.body.image
+    };
+    shop_model.updateProduct(product, function (err, result) {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send(err);
+        } else {
+            res.json({ message: "Successfully update product!" });
+        }
+    })
+};
+
+const deleteProduct = (req, res) => {
+    let product_id = req.body.product_id;
+    shop_model.deleteProduct(product_id, function (err, result) {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.json({ message: "Successfully delete product!" });
+        }
+    })
+}
+
 module.exports = {
     getShopName,
     getCategories,
     viewProduct,
-    insertProduct
+    insertProduct,
+    updateProduct,
+    deleteProduct
 };
 

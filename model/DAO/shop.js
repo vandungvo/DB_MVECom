@@ -51,26 +51,29 @@ const insertProduct = (product, controller) => {
     });
 }
 
-const updateProduct = (productId, newPrice, newStock, newSoldQuantities, newRating, newRateNums, callback) => {
-    const query = "CALL UpdateProduct(?, ?, ?, ?, ?, ?)";
-    connect_DB.query(query, [productId, newPrice, newStock, newSoldQuantities, newRating, newRateNums], (err, result) => {
+const updateProduct = (product, controller) => {
+    const query = `CALL UpdateProduct(
+        ${product.product_id}, ${product.ctg_id}, '${product.name}', '${product.SKU}', 
+        ${product.price}, ${product.stock}, '${product.description}', '${product.image}'
+    )`;
+    connect_DB.query(query, (err, result) => {
         if (err) {
-            console.error(err);
-            callback(err, null);
+            console.error(err.message);
+            controller(err, null);
         } else {
-            callback(null, result);
+           controller(null, result[0]);
         }
     });
 }
 
-const deleteProduct = (productId, callback) => {
-    const query = "CALL DeleteProduct(?)";
-    connect_DB.query(query, [productId], (err, result) => {
+const deleteProduct = (product_id, controller) => {
+    const query = `CALL DeleteProduct(${product_id})`;
+    connect_DB.query(query, (err, result) => {
         if (err) {
-            console.error(err);
-            callback(err, null);
+            console.error(err.message);
+            controller(err, null);
         } else {
-            callback(null, result);
+           controller(null, result[0]);
         }
     });
 }

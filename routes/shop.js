@@ -6,5 +6,7 @@ shop_router.post("/getShopName", shop_controller.getShopName);
 shop_router.post("/getCategories", shop_controller.getCategories);
 shop_router.post("/viewProduct", shop_controller.viewProduct);
 shop_router.post("/insertProduct", shop_controller.insertProduct);
+shop_router.post("/deleteProduct", shop_controller.deleteProduct);
+shop_router.post("/updateProduct", shop_controller.updateProduct);
 
 module.exports = shop_router;
