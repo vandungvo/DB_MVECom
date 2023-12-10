@@ -1,6 +1,18 @@
 const shop_model = require('../model/DAO/shop');
 const authorization_model = require('../model/DAO/authorization');
 
+const getUser = (req, res) => {
+    let shop_id = req.body.shop_id;
+    shop_model.getUser(shop_id, function (err, user) {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.json(user);
+        }
+    })
+}
+
 const getShopName = (req, res) => {
     let shop_id = req.body.shop_id;
     shop_model.getShopName(shop_id, function (err, shop_name) {
@@ -91,6 +103,7 @@ const deleteProduct = (req, res) => {
 }
 
 module.exports = {
+    getUser,
     getShopName,
     getCategories,
     viewProduct,
