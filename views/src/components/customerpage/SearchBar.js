@@ -1,20 +1,12 @@
-import React, { useState } from 'react';
+import {useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
-const SearchBar = () => {
-  const navigate = useNavigate();
-  const { keyword: urlKeyword } = useParams();
-  const [keyword, setKeyword] = useState(urlKeyword);
+const SearchBar = ({ setKeyword }) => {
+  const [input, setInput] = useState('');
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (keyword) {
-      navigate(`/shop/search/${keyword.trim()}`);
-    } else {
-      navigate('/shop');
-    }
+    setKeyword(input);
   };
 
   return (
@@ -22,8 +14,8 @@ const SearchBar = () => {
       <Form.Control
         type='text'
         name='q'
-        onChange={(e) => setKeyword(e.target.value)}
-        value={keyword}
+        onChange={(e) => setInput(e.target.value)}
+        value={input}
         placeholder='Search Products...'
         className='mr-sm-2 ml-sm-5'
       ></Form.Control>

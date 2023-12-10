@@ -15,9 +15,11 @@ import ProtectedTest from './components/(test_only)protected_test/protected_test
 import PublicTest from './components/(test_only)public_test/public_test';
 import SignUp from './components/signup/signup';
 import ManageProduct from './components/seller/manageProduct';
-import ShopPage from './components/shoppage/ShopPage';
-import ProductPage from './components/shoppage/ProductPage';
-import CartPage from './components/shoppage/CartPage';
+import ShopPage from './components/customerpage/ShopPage';
+import ProductPage from './components/customerpage/ProductPage';
+import CartPage from './components/customerpage/CartPage';
+import ProfilePage from './components/customerpage/ProfilePage';
+import OrderPage from './components/customerpage/OrderPage';
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
         <Route path='shop/:keyword' element={<ShopPage />} />
         <Route path='product/:id' element={<ProductPage />} />
         <Route path='cart' element={<CartPage />} />
+        <Route path='profile' element={<ProfilePage />} />
+        <Route path='order/:id' element={<OrderPage />} />
         
         <Route path="*" element={<NoPage />} />
       </Route>

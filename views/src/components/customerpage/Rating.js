@@ -4,7 +4,7 @@ const FullStar = () => (
     width="16"
     height="16"
     fill="currentColor"
-    class="bi bi-star-fill"
+    className="bi bi-star-fill"
     viewBox="0 0 16 16"
     color="#f8e825"
   >
@@ -18,7 +18,7 @@ const HalfStar = () => (
     width="16"
     height="16"
     fill="currentColor"
-    class="bi bi-star-half"
+    className="bi bi-star-half"
     viewBox="0 0 16 16"
     color="#f8e825"
   >
@@ -32,7 +32,7 @@ const EmptyStar = () => (
     width="16"
     height="16"
     fill="currentColor"
-    class="bi bi-star"
+    className="bi bi-star"
     viewBox="0 0 16 16"
     color="#f8e825"
   >
@@ -42,7 +42,7 @@ const EmptyStar = () => (
 
 const Rating = ({ value, text }) => {
   return (
-    <div className="rating">
+    <div className="rating d-flex gap-1 align-items-center">
       <span>
         {value >= 1 ? (
           <FullStar />

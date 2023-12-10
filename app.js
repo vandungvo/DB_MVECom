@@ -6,6 +6,7 @@ var helmet = require('helmet'); // security module for HTTP headers
 var rateLimit = require("express-rate-limit"); // limits the number of requests from a single IP address
 var session = require('express-session'); // module for managing sessions
 var cookieParser = require('cookie-parser'); // parse cookies from HTTP requests
+const cors = require('cors');
 
 const homepageRoute = require('./routes/homepage'); // handles requests for the homepage
 const signinRoute = require('./routes/signin');
@@ -14,6 +15,8 @@ const protectedTestRoute = require("./routes/protected_test");
 const registrationRoute = require("./routes/registration");
 const publicTestRoute = require("./routes/public_test");
 const shopRoute = require("./routes/shop");
+const productRoute = require("./routes/product");
+const orderRoute = require("./routes/order.js");
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -31,11 +34,12 @@ const cspConfig = {
 
 var app = express();
 // app.set('view engine', 'ejs');
+app.use(cors());
 app.use(bodyParser.json()); // parse Json-formatted request bodies
 app.use(bodyParser.urlencoded({ extended: true })); // parse URL-encoded request bodies
 app.use(helmet.contentSecurityPolicy(cspConfig)); // set Content-Security-Policy headers
 app.use(express.static('assets')); // serve static files from the assets directory
-app.use(limiter); // apply rate limiter to all requests
+//app.use(limiter); // apply rate limiter to all requests
 app.use(cookieParser()); // parse cookies from HTTP requests
 app.use(session({
     secret: "Your secret key",
@@ -56,5 +60,9 @@ app.use("/api/register", registrationRoute);
 app.use("/api/publicTest", publicTestRoute);
 
 app.use("/api/shop", shopRoute);
+
+app.use("/api/products", productRoute);
+
+app.use("/api/orders", orderRoute);
 
 app.listen(8080);

@@ -87,8 +87,6 @@ create table product (
 	rate_nums int default 0,
     constraint shop_product_fk foreign key (shop_id) references shop (user_id) on update cascade on delete cascade, 
     constraint ctg_product_fk foreign key (ctg_id) references category (ctg_id) on update cascade on delete no action
-
-
 );
 
 create table wish_item (
@@ -135,7 +133,7 @@ create table voucher (
 create table orders (
 	order_id int not null primary key auto_increment,
     cus_id int not null,
-    total_price decimal(12, 2) not null,
+    total_price decimal(12, 2) not null default 0,
     order_date date not null default(curdate()),
     constraint customer_order_fk foreign key (cus_id) references customer (user_id) on update cascade on delete cascade
 );
@@ -167,8 +165,8 @@ create table bill (
     shop_id int not null,
     voucher_id varchar(20) default null,
     order_date date not null default (curdate()),
-    total_price decimal(12,2) not null,
-    bill_status varchar(35) not null,
+    total_price decimal(12,2) not null default 0,
+    bill_status varchar(35) not null default 'complete',
     constraint oder_bill_fk foreign key (order_id) references orders (order_id) on update cascade on delete cascade,
     constraint shop_bill_fk foreign key (shop_id) references shop (user_id) on update no action on delete no action,
     constraint voucher_bill_fk foreign key (voucher_id) references voucher (voucher_id) on update cascade on delete cascade

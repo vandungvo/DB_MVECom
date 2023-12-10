@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
@@ -9,22 +9,12 @@ import {
   Card,
   Button,
   Form,
+  Spinner,
 } from "react-bootstrap";
 import Rating from "./Rating";
 import { addToCart } from "../../slices/cartSlice";
 import { useDispatch } from "react-redux";
-
-const product = {
-  product_id: "1",
-  name: "Airpods Wireless Bluetooth Headphones",
-  image: "https://m.media-amazon.com/images/I/41BsHIgteaL.jpg",
-  rating: 4.5,
-  rate_nums: 12,
-  price: 89.99,
-  description:
-    "Bluetooth technology lets you connect it with compatible devices wirelessly. High-quality AAC audio offers immersive listening experience. Built-in microphone allows you to take calls while working.",
-  stock: 5,
-};
+import axios from "axios";
 
 const ProductPage = () => {
   const { id: productId } = useParams();
@@ -32,12 +22,30 @@ const ProductPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [product, setProduct] = useState({});
   const [qty, setQty] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      setLoading(true);
+      const response = await axios.get(`/api/products/${productId}`);
+      setProduct(response.data[0]);
+      setLoading(false);
+      console.log(response.data);
+    };
+
+    fetchProduct();
+  }, [productId]);
 
   const addToCartHandler = () => {
     dispatch(addToCart({ ...product, qty }));
     navigate("/cart");
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -47,12 +55,18 @@ const ProductPage = () => {
       <>
         <Row className="mx-5">
           <Col md={5}>
-            <Image src={product.image} alt={product.name} fluid />
+            <Image src={product.image} alt={product.product_name} fluid />
           </Col>
           <Col md={4}>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <h3>{product.name}</h3>
+                <h3>{product.product_name}</h3>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <div className="d-flex justify-content-between">
+                  <h6>{product.shop_name}</h6>
+                  <h6>{product.ctg_name}</h6>
+                </div>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Rating
@@ -62,7 +76,7 @@ const ProductPage = () => {
               </ListGroup.Item>
               <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
               <ListGroup.Item>
-                Description: {product.description}
+                Description: {product.product_description}
               </ListGroup.Item>
             </ListGroup>
           </Col>
@@ -89,17 +103,23 @@ const ProductPage = () => {
                     <Row>
                       <Col>Qty</Col>
                       <Col>
-                        <Form.Control
-                          as="select"
-                          value={qty}
-                          onChange={(e) => setQty(Number(e.target.value))}
+                        <Button
+                          variant="outline-primary"
+                          onClick={() => setQty(qty > 1 ? qty - 1 : 1)}
                         >
-                          {[...Array(product.stock).keys()].map((x) => (
-                            <option key={x + 1} value={x + 1}>
-                              {x + 1}
-                            </option>
-                          ))}
-                        </Form.Control>
+                          -
+                        </Button>
+                        <span className="mx-2">{qty}</span>
+                        <Button
+                          variant="outline-primary"
+                          onClick={() =>
+                            setQty(
+                              qty < product.stock ? qty + 1 : product.stock
+                            )
+                          }
+                        >
+                          +
+                        </Button>
                       </Col>
                     </Row>
                   </ListGroup.Item>
