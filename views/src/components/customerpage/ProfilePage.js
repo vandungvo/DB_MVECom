@@ -13,17 +13,26 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'universal-cookie';
 
-const userInfo = {
-  first_name: "Thang",
-  last_name: "Pham",
-  user_type: "customer",
-  email: "thang.phamduc258@gmail.com",
-};
-
 const cookies = new Cookies();
 const user_id = cookies.get("USER_ID") || null;
 
 const ProfilePage = () => {
+  const shop_id = cookies.get("USER_ID") || null;
+  const [first_name, setFirstName] = useState(null);
+  const [last_name, setLastName] = useState(null);
+  const [email, setEmail] = useState(null);
+
+  useEffect(() => {
+      axios.post('/api/shop/getUser', {
+          shop_id
+      }).then(response => {
+          setFirstName(response.data[0].first_name)
+          setLastName(response.data[0].last_name)
+          setEmail(response.data[0].email)
+      }).catch(error => {
+          console.error(error);
+      })
+  }, []);
   /* const { userInfo } = useSelector((state) => state.auth);
   const { id } = userInfo; */
 
@@ -52,17 +61,17 @@ const ProfilePage = () => {
         <ListGroup>
           <ListGroup.Item>
             <h3>First Name</h3>
-            <p>{userInfo.first_name}</p>
+            <p>{first_name}</p>
           </ListGroup.Item>
 
           <ListGroup.Item>
             <h3>Last Name</h3>
-            <p>{userInfo.last_name}</p>
+            <p>{last_name}</p>
           </ListGroup.Item>
 
           <ListGroup.Item>
             <h3>Email Address</h3>
-            <p>{userInfo.email}</p>
+            <p>{email}</p>
           </ListGroup.Item>
         </ListGroup>
       </Col>

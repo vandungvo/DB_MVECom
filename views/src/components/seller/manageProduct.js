@@ -7,8 +7,8 @@ import Cookies from "universal-cookie";
 import './manageProduct.css';
 
 const cookies = new Cookies();
-const shop_id = cookies.get("USER_ID") || null;
-
+const shop_id = cookies.get("USER_ID");
+console.log(shop_id);
 function ManageProduct() {
     // view all products in shop
     const [reFresh, setReFresh] = useState(null);

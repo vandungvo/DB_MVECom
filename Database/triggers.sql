@@ -15,6 +15,8 @@ END //
 DELIMITER ;
 
 DROP TRIGGER IF EXISTS after_bill_product_insert;
+
+
 -- bill trigger
 DELIMITER //
 CREATE TRIGGER after_bill_product_insert
@@ -25,12 +27,9 @@ BEGIN
     UPDATE bill
     SET total_price = (
         SELECT SUM(quantity * price)
-        FROM (
-            SELECT bill_product.quantity, product.price
-            FROM bill_product
-            JOIN product ON bill_product.product_id = product.product_id
-            WHERE bill_product.bill_id = NEW.bill_id
-        ) AS subquery
+        FROM bill_product
+        JOIN product ON bill_product.product_id = product.product_id
+        WHERE bill.bill_id = NEW.bill_id
     )
     WHERE bill_id = NEW.bill_id;
 

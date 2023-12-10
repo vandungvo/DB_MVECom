@@ -11,13 +11,13 @@ import axios from 'axios';
 const UserContext = createContext();
 
 export default function Navbar() {
+    const cookies = new Cookies();
     const [shopName, setShopName] = useState(null);
     const navigate = useNavigate();
-    const cookies = new Cookies();
     const [signin, setSignIn] = useState(false);
     const [user_type, setUserType] = useState(null);
-    const shop_id = cookies.get("USER_ID") || null;
-    console.log(shop_id);
+    const [first_name, setFirstName] = useState(null);
+    const [last_name, setLastName] = useState(null);
 
     useEffect(() => {
         const token = cookies.get("TOKEN");
@@ -26,20 +26,21 @@ export default function Navbar() {
             setUserType(null);
         }
         else {
-            axios.post('/api/shop/getShopName', {
-                shop_id
-            })
-            .then(response => {
-                console.log(response.data[0].shop_name)
-                setShopName(response.data[0].shop_name)
-            })
-            .catch(error => console.error('Error fetching shop name:', error));
+            const shop_id = cookies.get("USER_ID");
             
             axios.post("/api/authorization/customer", {}, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             }).then((response) => {
+                axios.post('/api/shop/getUser', {
+                    shop_id
+                }).then(response => {
+                    setFirstName(response.data[0].first_name)
+                    setLastName(response.data[0].last_name)
+                }).catch(error => {
+                    console.error(error);
+                })
                 setSignIn(true);
                 setUserType("Customer");
             }).catch((error) => { });
@@ -49,6 +50,11 @@ export default function Navbar() {
                     Authorization: `Bearer ${token}`
                 }
             }).then((response) => {
+                axios.post('/api/shop/getShopName', { shop_id })  
+                .then(response => {
+                    setShopName(response.data[0].shop_name)
+                })
+                .catch(error => console.error('Error fetching shop name:', error));
                 setSignIn(true);
                 setUserType("Seller");
             }).catch((error) => { });
@@ -74,12 +80,8 @@ export default function Navbar() {
     }, []);
 
     const handleSignOut = (e) => {
-        cookies.remove('TOKEN', {
-            path: "/",
-        });
-        cookies.remove('USER_ID', {
-            path: "/",
-        });
+        cookies.remove("TOKEN", { path: "/" });
+        cookies.remove("USER_ID", { path: "/" });
         setSignIn(false);
         setUserType(null);
         setShopName(null);
@@ -111,6 +113,11 @@ export default function Navbar() {
     }
     else {
         if (user_type === "Customer") {
+            renderWelcome = (
+                <Link className="nav-link m-3" to="/profile">
+                    {first_name + " " + last_name}
+                </Link>
+            )
             navItem = (
                 <>
                     <li className="nav-item">
@@ -205,5 +212,4 @@ export default function Navbar() {
             </div>
         </nav>
     )
-
 }

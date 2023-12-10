@@ -8,6 +8,7 @@ import axios from 'axios'
 import { useState, useEffect } from "react";
 import Header from '../shared/header';
 import Cookies from "universal-cookie";
+
 const cookies = new Cookies();
 
 function SignIn() {
@@ -23,18 +24,15 @@ function SignIn() {
             user_password 
         })
         .then((response) => {
-            cookies.set("TOKEN", response.data.token, { 
-                path: "/" 
-            });
-            const userId = response.data.member.user_id;
-            cookies.set("USER_ID", userId, { path: "/" });
+            cookies.set("USER_ID", response.data.member.user_id, { path: "/" });
+            cookies.set("TOKEN", response.data.token, { path: "/" });
             setTimeout(() => {
                 window.location.reload();
             }, 100);
-            if (response.data.member.user_type == "CUSTOMER") {
+            if (response.data.member.user_type === "CUSTOMER") {
                 navigate("/shop")
             }
-            else if (response.data.member.user_type == "SELLER") {
+            else if (response.data.member.user_type === "SELLER") {
                 navigate("/manageProduct");
             }
             else {
