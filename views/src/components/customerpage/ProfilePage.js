@@ -11,6 +11,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Cookies from 'universal-cookie';
 
 const userInfo = {
   first_name: "Thang",
@@ -18,6 +19,9 @@ const userInfo = {
   user_type: "customer",
   email: "thang.phamduc258@gmail.com",
 };
+
+const cookies = new Cookies();
+const user_id = cookies.get("USER_ID") || null;
 
 const ProfilePage = () => {
   /* const { userInfo } = useSelector((state) => state.auth);
@@ -31,7 +35,7 @@ const ProfilePage = () => {
     const fetchOrders = async () => {
       setIsLoading(true);
       const response = await axios.get(
-        `http://localhost:8080/api/orders/2?sortOrder=${sortOrder}`
+        `http://localhost:8080/api/orders/${user_id}?sortOrder=${sortOrder}`
       );
       setOrders(response.data);
       setIsLoading(false);
