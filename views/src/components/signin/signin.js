@@ -27,6 +27,7 @@ function SignIn() {
                 path: "/" 
             });
             const userId = response.data.member.user_id;
+            cookies.set("USER_ID", userId, { path: "/" });
             setTimeout(() => {
                 window.location.reload();
             }, 100);
@@ -34,7 +35,6 @@ function SignIn() {
                 navigate("/shop")
             }
             else if (response.data.member.user_type == "SELLER") {
-                cookies.set("USER_ID", userId, { path: "/" });
                 navigate("/manageProduct");
             }
             else {
