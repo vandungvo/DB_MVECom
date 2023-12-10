@@ -235,7 +235,7 @@ create table refund (
     reason text,
     amount decimal(12,2) not null,
     refund_date date not null default (curdate()),
-    refund_status int not null,
+    refund_status int not null default 3,
     constraint customer_refund_fk foreign key (cus_id) references customer (user_id) on update cascade on delete cascade,
     constraint bill_refund_fk foreign key (bill_id) references bill (bill_id) on delete cascade
 );

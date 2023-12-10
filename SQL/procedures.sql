@@ -3,7 +3,8 @@ use e_commerce;
 DELIMITER //
 CREATE PROCEDURE GetProductsByCategory(IN categoryName VARCHAR(100))
 BEGIN
-    DECLARE no_rows CONDITION FOR SQLSTATE '02000'
+    DECLARE no_rows CONDITION FOR SQLSTATE '02000';
+    DECLARE no_rows CONDITION FOR SQLSTATE '02000';
 
     DECLARE EXIT HANDLER FOR no_rows
     BEGIN
@@ -24,7 +25,8 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE GetOrderHistory(user_id INT,start_date DATE, end_date DATE)
 BEGIN
-    DECLARE no_rows CONDITION FOR SQLSTATE '02000'
+    DECLARE no_rows CONDITION FOR SQLSTATE '02000';
+    DECLARE no_rows CONDITION FOR SQLSTATE '02000';
 
     DECLARE EXIT HANDLER FOR no_rows
     BEGIN
@@ -55,7 +57,7 @@ BEGIN
         c.user_id = user_id AND b.order_date >= start_date AND b.order_date <= end_date
     ORDER BY b.order_date;
 END //
-DELIMITER;
+DELIMITER ; 
 
 
 -- DELIMITER //

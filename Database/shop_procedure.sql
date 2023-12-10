@@ -1,14 +1,14 @@
--- Stored procedure to get user information
+-- Stored procedure to get shop information
 DELIMITER //
 CREATE PROCEDURE GetUser(
-    IN id INT
+	IN id INT
 )
-BEGIN
-    SELECT *
+BEGIN 
+	SELECT * 
     FROM users
     WHERE user_id = id;
 END //
-DELIMITER ;
+DELIMITER;
 
 -- Stored procedure to get name of shop
 DELIMITER //

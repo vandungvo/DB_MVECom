@@ -46,8 +46,10 @@ BEGIN
 END //
 DELIMITER ;
 
-CREATE FUNCTION ShopReport(shop_id INT,start_date DATE, end_date DATE) 
 DELIMITER //
+CREATE FUNCTION ShopReport(shop_id INT,start_date DATE, end_date DATE) 
+RETURNS TEXT
+DETERMINISTIC
 BEGIN 
     DECLARE product_quantity INT;
     DECLARE product_access INT;
@@ -64,7 +66,7 @@ BEGIN
     
     SELECT COUNT(*) INTO total_product FROM product;
     IF total_product = 0 THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No Product found!'
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No Product found!';
 	END IF;
     IF end_date > NOW() THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Invalid input date, end_date can not greater than now';
@@ -73,14 +75,6 @@ BEGIN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Invalid input date, end_date can not greater than start_date';
 	END IF;
     
-    DECLARE no_rows CONDITION FOR SQLSTATE '02000'
-
-    DECLARE EXIT HANDLER FOR no_rows
-    BEGIN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Error: No Product found!';
-    END;
-
     SET result_msg = CONCAT("---------", "PRODUCT SELLING REPORT FROM ", start_date, " TO ", end_date, "---------\n");
     OPEN product_access;
     read_loop: LOOP
@@ -102,7 +96,7 @@ BEGIN
 		END IF;
         SET result_msg = CONCAT(result_msg, '\nProduct id: ', product_access_id, ' | Sold quantities: ', product_quantity);
 	END LOOP read_loop;
-    CLOSE shop_access;
+    CLOSE product_access;
     RETURN result_msg;
 
 END //
