@@ -1,7 +1,5 @@
 USE e_commerce;
 
-USE e_commerce;
-
 DROP FUNCTION IF EXISTS ShopVolume;
 DELIMITER //
 CREATE FUNCTION ShopVolume(start_date DATE, end_date DATE) 
@@ -15,18 +13,18 @@ BEGIN
     DECLARE result_msg TEXT DEFAULT "";
     DECLARE total_shop INT;
     DECLARE shop_access CURSOR FOR 
-	SELECT user_id FROM shop ORDER BY user_id ASC;
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET DONE = TRUE;
+		SELECT user_id FROM shop ORDER BY user_id ASC;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET DONE = TRUE;
     
     SELECT COUNT(*) INTO total_shop FROM shop;
     IF total_shop = 0 THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Lỗi: Chưa có shop nào được thêm vào';
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ERROR: No Shop Found';
 	END IF;
     IF start_date > end_date THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Lỗi: Ngày không hợp lệ';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ERROR: Invalid Date';
     END IF;
     IF end_date > NOW() THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Lỗi: Ngày không hợp lệ';
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ERROR: Invalid Date';
 	END IF;
     
     SET result_msg = CONCAT("---------", "VOLUME OF SHOPS FROM ", start_date, " TO ", end_date, "---------\n");
