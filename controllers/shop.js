@@ -59,13 +59,26 @@ const insertProduct = (req, res) => {
         description: req.body.description,
         image: req.body.image
     };
-    shop_model.insertProduct(product, function (err, result) {
-        if (err) {
-            res.status(500).json({ message: err.message });
-        } else {
-            res.json({ message: "Successfully add product!" });
-        }
-    })
+    const isEmpty = (value) => value == null || value == undefined || value == '';
+    if (isEmpty(req.body.ctg_id)) {
+        res.status(400).json({ message: 'Không được để trống catergory' });
+    } else if (isEmpty(req.body.name)) {
+        res.status(400).json({ message: 'Không được để trống tên sản phẩm' });
+    } else if (isEmpty(req.body.SKU)) {
+        res.status(400).json({ message: 'Không được để trống SKU' });
+    } else if (isEmpty(req.body.price)) {
+        res.status(400).json({ message: 'Không được để trống giá' });
+    } else if (isEmpty(req.body.stock)) {
+        res.status(400).json({ message: 'Không được để trống stock' });
+    } else {
+        shop_model.insertProduct(product, function (err, result) {
+            if (err) {
+                res.status(500).json({ message: err.message });
+            } else {
+                res.json({ message: "Successfully add product!" });
+            }
+        })
+    }
 };
 
 const updateProduct = (req, res) => {
@@ -79,14 +92,26 @@ const updateProduct = (req, res) => {
         description: req.body.description,
         image: req.body.image
     };
-    shop_model.updateProduct(product, function (err, result) {
-        if (err) {
-            console.error(err.message);
-            res.status(500).send(err);
-        } else {
-            res.json({ message: "Successfully update product!" });
-        }
-    })
+    const isEmpty = (value) => value == null || value == undefined || value == '';
+    if (isEmpty(req.body.ctg_id)) {
+        res.status(400).json({ message: 'Không được để trống catergory' });
+    } else if (isEmpty(req.body.name)) {
+        res.status(400).json({ message: 'Không được để trống tên sản phẩm' });
+    } else if (isEmpty(req.body.SKU)) {
+        res.status(400).json({ message: 'Không được để trống SKU' });
+    } else if (isEmpty(req.body.price)) {
+        res.status(400).json({ message: 'Không được để trống giá' });
+    } else if (isEmpty(req.body.stock)) {
+        res.status(400).json({ message: 'Không được để trống stock' });
+    } else {
+        shop_model.updateProduct(product, function (err, result) {
+            if (err) {
+                res.status(500).json({ message: err.message });
+            } else {
+                res.json({ message: "Successfully update product!" });
+            }
+        })
+    }
 };
 
 const deleteProduct = (req, res) => {

@@ -40,32 +40,36 @@ function ManageProduct() {
         .catch( err => setError(err.response.data.message) );
         setAddPopup(true);
     }
-    const handleAddPopupClose = () => { setAddPopup(false); }
+    const handleAddPopupClose = () => { setAddPopup(false); setError(null) }
     const handleInsertProductSubmit = (e) => {
         e.preventDefault();
         axios.post('/api/shop/insertProduct', { shop_id, ctg_id, name, SKU, price, stock, description, image })
         .then((response) => { setReFresh(prev => prev + 1); setError(null); })
-        .catch(err => setError(err.response.data.message) );
+        .catch( err => setError(err.response.data.message) );
     };
 
     // update
     const [updatePopup, setUpdatePopup] = useState(false);
-    const handleUpdateButtonClick = (product_id) => { setProductId(product_id); setUpdatePopup(true); }
-    const handleUpdatePopupClose = () => { setUpdatePopup(false); }
-    const handleUpdateProductSubmit = () => {
-        axios.post('/api/shop/updateProduct', { product_id, ctg_id, name, SKU, price, stock, description, image})
+    const handleUpdateButtonClick = (product_id) => { 
+        axios.post('/api/shop/getCategories')
+        .then( response => setCategories(response.data) )
+        .catch( err => setError(err.response.data.message) );
+        setProductId(product_id); 
+        setUpdatePopup(true); 
+    }
+    const handleUpdatePopupClose = () => { setUpdatePopup(false); setError(null) }
+    const handleUpdateProductSubmit = (e) => {
+        e.preventDefault();
+        axios.post('/api/shop/updateProduct', { product_id, ctg_id, name, SKU, price, stock, description, image })
         .then((response) => { setReFresh(prev => prev + 1); setError(null); })
-        .catch(error => {
-            console.error('Error: ', error.message);
-            console.log(ctg_id);
-        });
+        .catch( err => setError(err.response.data.message) );
     }
 
+    // delete
     const handleDeleteProduct = (product_id) => {
-        axios.post('/api/shop/deleteProduct', {
-            product_id
-        }).then( setReFresh(prev => prev + 1) )
-        .catch(error => console.error('Error fetching permitted file types:', error));
+        axios.post('/api/shop/deleteProduct', { product_id })
+        .then( setReFresh(prev => prev + 1) )
+        .catch( err => setError(err.response.data.message) );
     };
 
     return (
@@ -117,190 +121,191 @@ function ManageProduct() {
 
             {addPopup && (
                 <div className="popup-overlay">
-                <div className="popup">
-                    <div>
-                        <h2 className="mt-1">Add new product</h2>
+                    <div className="popup">
+                        <div>
+                            <h2 className="mt-1">Add new product</h2>
+                        </div>
+                        <form>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Category</td>
+                                    <td>
+                                        <select
+                                            value={ctg_id}
+                                            onChange={(e) => setCtgId(e.target.value)}
+                                        >
+                                            <option value="">Select a category</option>
+                                            {categories.map((ctg) => (
+                                                <option key={ctg.id} value={ctg.ctg_id}>
+                                                    {ctg.ctg_name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={e => setName(e.target.value)}
+                                    />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>SKU</td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={SKU}
+                                        onChange={e => setSKU(e.target.value)}
+                                    />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Price</td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={price}
+                                        onChange={e => setPrice(e.target.value)}
+                                    />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Stock</td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={stock}
+                                        onChange={e => setStock(e.target.value)}
+                                    />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Description</td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={description}
+                                        onChange={e => setDescription(e.target.value)}
+                                    />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Image</td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={image}
+                                        onChange={e => setImage(e.target.value)}
+                                    />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {error && (<p className="text-danger mt-3">{error}</p>)}
+                        <button className="btn btn-danger mt-2 mx-5" onClick={handleAddPopupClose}>Huỷ</button>
+                        <button className="btn btn-primary mt-2 mx-5" onClick={handleInsertProductSubmit}>Xác nhận</button>
+                        </form>
                     </div>
-                    <form>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Category</td>
-                                <td>
-                                    <select
-                                        value={ctg_id}
-                                        onChange={(e) => setCtgId(e.target.value)}
-                                    >
-                                        <option value="">Select a category</option>
-                                        {categories.map((ctg) => (
-                                            <option key={ctg.id} value={ctg.ctg_id}>
-                                                {ctg.ctg_name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>
-                                <input
-                                    type="text"
-                                    value={name}
-                                    onChange={e => setName(e.target.value)}
-                                />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>SKU</td>
-                                <td>
-                                <input
-                                    type="text"
-                                    value={SKU}
-                                    onChange={e => setSKU(e.target.value)}
-                                />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Price</td>
-                                <td>
-                                <input
-                                    type="text"
-                                    value={price}
-                                    onChange={e => setPrice(e.target.value)}
-                                />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Stock</td>
-                                <td>
-                                <input
-                                    type="text"
-                                    value={stock}
-                                    onChange={e => setStock(e.target.value)}
-                                />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Description</td>
-                                <td>
-                                <input
-                                    type="text"
-                                    value={description}
-                                    onChange={e => setDescription(e.target.value)}
-                                />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Image</td>
-                                <td>
-                                <input
-                                    type="text"
-                                    value={image}
-                                    onChange={e => setImage(e.target.value)}
-                                />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button className="btn btn-danger mt-2 mx-5" onClick={handleAddPopupClose}>Huỷ</button>
-                    <button className="btn btn-primary mt-2 mx-5" onClick={handleInsertProductSubmit}>Xác nhận</button>
-                    </form>
-                    {error && (<p className="text-danger">{error}</p>)}
-                </div>
                 </div>
             )}
 
             {updatePopup && (
                 <div className="popup-overlay">
-                <div className="popup">
-                    <div>
-                        <h2 className="mt-1">Add new product</h2>
+                    <div className="popup">
+                        <div>
+                            <h2 className="mt-1">Update product</h2>
+                        </div>
+                        <form>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Category</td>
+                                    <td>
+                                        <select
+                                            value={ctg_id}
+                                            onChange={(e) => setCtgId(e.target.value)}
+                                        >
+                                            <option value="">Select a category</option>
+                                            {categories.map((ctg) => (
+                                                <option key={ctg.id} value={ctg.ctg_id}>
+                                                    {ctg.ctg_name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={e => setName(e.target.value)}
+                                    />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>SKU</td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={SKU}
+                                        onChange={e => setSKU(e.target.value)}
+                                    />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Price</td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={price}
+                                        onChange={e => setPrice(e.target.value)}
+                                    />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Stock</td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={stock}
+                                        onChange={e => setStock(e.target.value)}
+                                    />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Description</td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={description}
+                                        onChange={e => setDescription(e.target.value)}
+                                    />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Image</td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={image}
+                                        onChange={e => setImage(e.target.value)}
+                                    />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {error && (<p className="text-danger mt-3">{error}</p>)}
+                        <button className="btn btn-danger mt-2 mx-5" onClick={handleUpdatePopupClose}>Huỷ</button>
+                        <button className="btn btn-primary mt-2 mx-5" onClick={handleUpdateProductSubmit}>Xác nhận</button>
+                        </form>
                     </div>
-                    <form>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Category</td>
-                                <td>
-                                    <select
-                                        value={ctg_id}
-                                        onChange={(e) => setCtgId(e.target.value)}
-                                    >
-                                        <option value="">Select a category</option>
-                                        {categories.map((ctg) => (
-                                            <option key={ctg.id} value={ctg.ctg_id}>
-                                                {ctg.ctg_name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>
-                                <input
-                                    type="text"
-                                    value={name}
-                                    onChange={e => setName(e.target.value)}
-                                />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>SKU</td>
-                                <td>
-                                <input
-                                    type="text"
-                                    value={SKU}
-                                    onChange={e => setSKU(e.target.value)}
-                                />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Price</td>
-                                <td>
-                                <input
-                                    type="text"
-                                    value={price}
-                                    onChange={e => setPrice(e.target.value)}
-                                />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Stock</td>
-                                <td>
-                                <input
-                                    type="text"
-                                    value={stock}
-                                    onChange={e => setStock(e.target.value)}
-                                />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Description</td>
-                                <td>
-                                <input
-                                    type="text"
-                                    value={description}
-                                    onChange={e => setDescription(e.target.value)}
-                                />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Image</td>
-                                <td>
-                                <input
-                                    type="text"
-                                    value={image}
-                                    onChange={e => setImage(e.target.value)}
-                                />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button className="btn btn-danger mt-2 mx-5" onClick={handleUpdatePopupClose}>Huỷ</button>
-                    <button className="btn btn-primary mt-2 mx-5" onClick={handleUpdateProductSubmit}>Xác nhận</button>
-                    </form>
-                </div>
                 </div>
             )}
     

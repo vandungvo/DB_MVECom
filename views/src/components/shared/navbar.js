@@ -17,7 +17,7 @@ export default function Navbar() {
     const [signin, setSignIn] = useState(false);
     const [user_type, setUserType] = useState(null);
     const shop_id = cookies.get("USER_ID") || null;
-            
+
     useEffect(() => {
         const token = cookies.get("TOKEN");
         if (!token) {
@@ -29,6 +29,7 @@ export default function Navbar() {
                 shop_id
             })
             .then(response => {
+                console.log(response.data[0].shop_name)
                 setShopName(response.data[0].shop_name)
             })
             .catch(error => console.error('Error fetching shop name:', error));
