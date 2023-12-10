@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Link, NavLink, Outlet } from "react-router-dom";
 import $ from 'jquery';
@@ -15,6 +15,7 @@ import ProtectedTest from './components/(test_only)protected_test/protected_test
 import PublicTest from './components/(test_only)public_test/public_test';
 import SignUp from './components/signup/signup';
 import ManageProduct from './components/seller/manageProduct';
+import ManageProfile from './components/seller/manageProfile';
 import ShopPage from './components/customerpage/ShopPage';
 import ProductPage from './components/customerpage/ProductPage';
 import CartPage from './components/customerpage/CartPage';
@@ -26,14 +27,14 @@ function App() {
     <Routes>
       <Route path="/" element={<Header />}>
         <Route index element={<Homepage />} />
-        <Route path='signin' element={<SignIn />} />
-        <Route path='signup' element={<SignUp />} />
-        <Route path='publicTest' element={<PublicTest />} />
-        <Route element={<PrivateRoutes validateRoute={"protectedTest"} />} >
-          <Route path='protectedTest' element={<ProtectedTest />} />
+        <Route path="signin" element={<SignIn />} />
+        <Route path="signup" element={<SignUp />} />
+        <Route path="publicTest" element={<PublicTest />} />
+        <Route element={<PrivateRoutes validateRoute={"protectedTest"} />}>
+          <Route path="protectedTest" element={<ProtectedTest />} />
         </Route>
         <Route path='manageProduct' element={<ManageProduct/>} />
-
+        <Route path='manageProfile' element={<ManageProfile />} />
         <Route path='shop' element={<ShopPage />} />
         <Route path='shop/:keyword' element={<ShopPage />} />
         <Route path='product/:id' element={<ProductPage />} />
@@ -48,4 +49,3 @@ function App() {
 }
 
 export default App;
-

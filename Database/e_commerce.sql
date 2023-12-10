@@ -9,6 +9,7 @@ drop table if exists shipment;
 drop table if exists bill_product;
 drop table if exists bill;
 drop table if exists payment;
+drop table if exists status_table;
 drop table if exists method;
 drop table if exists orders;
 drop table if exists voucher;
@@ -66,23 +67,18 @@ create table category (
     ctg_name varchar(100) not null
 );
 
-create table product (
-
+create table product  (
 	product_id int not null primary key auto_increment,
     shop_id int not null,
     ctg_id int not null,
-    product_name varchar(1000) not null,
+    product_name varchar(2000) not null,
     SKU varchar(10) not null unique,
     upload_date date not null default (curdate()),
-	price decimal(14,2) not null,
-
-
+	price decimal(12,2) not null,
     stock int not null,
 	sold_quantities int not null default 0,
     product_description text,
     image text,
-
-
     rating decimal(2, 1) default 0,
 	rate_nums int default 0,
     constraint shop_product_fk foreign key (shop_id) references shop (user_id) on update cascade on delete cascade, 
@@ -102,9 +98,9 @@ create table promotion (
     promotion_name varchar(100) not null,
     start_date date not null,
     end_date date not null,
-    promotion_type varchar (16) not null,
+    promotion_type varchar (10) not null,
     discount_percen int not null,
-    constraint promotion_type check (promotion_type in ('VOUCHER', 'SALE', 'SHOP PROMOTION'))
+    constraint promotion_type check (promotion_type in ('VOUCHER', 'SALE', 'SHOPPR'))
 );
 
 create table shop_promotion (
@@ -159,6 +155,20 @@ create table payment (
     constraint method_payment_fk foreign key (method_id) references method (method_id) on update no action on delete no action
 );
 
+create table status_table (
+	status_id int primary key,
+    status_text varchar(50)
+);
+
+insert into status_table
+values 
+(1, 'COMPLETE'),
+(2, 'INCOMPETE'),
+(3, 'WAIT FOR CONFIRMATION'),
+(4, 'DELIVERING'),
+(5, 'CONFUSED'),
+(6, 'CONFIRMED');
+
 create table bill (
 	bill_id int not null primary key auto_increment,
     order_id int not null,
@@ -169,7 +179,8 @@ create table bill (
     bill_status varchar(35) not null default 'complete',
     constraint oder_bill_fk foreign key (order_id) references orders (order_id) on update cascade on delete cascade,
     constraint shop_bill_fk foreign key (shop_id) references shop (user_id) on update no action on delete no action,
-    constraint voucher_bill_fk foreign key (voucher_id) references voucher (voucher_id) on update cascade on delete cascade
+    constraint voucher_bill_fk foreign key (voucher_id) references voucher (voucher_id) on update cascade on delete cascade,
+    constraint bill_status_fk foreign key (bill_status) references status_table (status_id)
 );
 
 create table bill_product (
@@ -186,14 +197,14 @@ create table shipment (
     voucher_id varchar(20),
     bill_id int not null,
     shipper_id int not null,
-    shipping_free decimal(10,2) not null,
+    shipping_fee decimal(10,2) not null,
     phone_num varchar(12) not null,
-    shipment_status varchar(12) not null,
+    shipment_status int not null,
     estimated_time date default (curdate()),
     constraint voucher_shipment_fk foreign key (voucher_id) references voucher (voucher_id) on update no action on delete no action,
     constraint bill_shipment_fk foreign key (bill_id) references bill (bill_id) on update no action on delete cascade,
     constraint shipper_shipment_fk foreign key (shipper_id) references shipper (user_id) on update no action on delete no action,
-    constraint shipment_status check (shipment_status in ('COMPLETE', 'INCOMPLETE', 'DELIVERING'))
+	constraint shipment_status_fk foreign key (shipment_status) references status_table (status_id)
 );
 
 create table shipment_address (
@@ -224,8 +235,7 @@ create table refund (
     reason text,
     amount decimal(12,2) not null,
     refund_date date not null default (curdate()),
-    refund_status varchar(32) not null,
+    refund_status int not null,
     constraint customer_refund_fk foreign key (cus_id) references customer (user_id) on update no action on delete cascade,
-    constraint bill_refund_fk foreign key (bill_id) references bill (bill_id) on update no action on delete no action,
-    constraint refund_status check (refund_status in ('WAIT FOR CONFIRMATION', 'CONFIRMED', 'REFUSED'))
+    constraint bill_refund_fk foreign key (bill_id) references bill (bill_id) on update no action on delete no action
 );
