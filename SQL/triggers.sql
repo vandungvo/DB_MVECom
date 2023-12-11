@@ -58,7 +58,6 @@ BEGIN
     WHERE order_id = (SELECT order_id FROM bill WHERE bill_id = NEW.bill_id);
     
     UPDATE product SET sold_quantities = sold_quantities + NEW.quantity WHERE product_id = NEW.product_id;
-    
 END //
 
 DELIMITER ;

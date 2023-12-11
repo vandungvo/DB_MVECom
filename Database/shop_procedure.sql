@@ -1,4 +1,7 @@
+use e_commerce;
+
 -- Stored procedure to get shop information
+DROP PROCEDURE IF EXISTS GetUser;
 DELIMITER //
 CREATE PROCEDURE GetUser(
 	IN id INT
@@ -10,7 +13,9 @@ BEGIN
 END //
 DELIMITER;
 
+
 -- Stored procedure to get name of shop
+DROP PROCEDURE IF EXISTS GetShopName;
 DELIMITER //
 CREATE PROCEDURE GetShopName(
     IN id INT
@@ -22,6 +27,7 @@ BEGIN
 END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS GetAllProducts;
 -- Stored procedure to get all products in a shop
 DELIMITER //
 CREATE PROCEDURE GetAllProducts(
@@ -35,6 +41,7 @@ BEGIN
 END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS GetCategories;
 -- Stored procedure to get all catergories
 DELIMITER //
 CREATE PROCEDURE GetCategories()
@@ -43,7 +50,7 @@ BEGIN
 END //
 DELIMITER ;
 
-
+DROP PROCEDURE IF EXISTS InsertProduct;
 -- Stored procedure to add a new product
 DELIMITER //
 CREATE PROCEDURE InsertProduct(
@@ -74,7 +81,7 @@ BEGIN
 END //
 DELIMITER ;
 
-
+DROP PROCEDURE IF EXISTS UpdateProduct;
 -- stored procedure to update product
 DELIMITER //
 CREATE PROCEDURE UpdateProduct(
@@ -107,6 +114,7 @@ BEGIN
 END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS DeleteProduct;
 -- stored procedure to delete a product
 DELIMITER //
 CREATE PROCEDURE DeleteProduct(
@@ -118,10 +126,10 @@ BEGIN
 END //
 DELIMITER ;
 
-drop procedure getBillInfo;
+DROP PROCEDURE IF EXISTS GetBillInfo;
 -- stored procedure to get orders
 DELIMITER //
-create procedure getBillInfo (in shop_id int)
+create procedure GetBillInfo (in shop_id int)
 begin
   select product_name, quantity, quantity * price as total_price, bill_status
   from product

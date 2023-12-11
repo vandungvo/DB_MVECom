@@ -46,6 +46,7 @@ BEGIN
 END //
 DELIMITER ;
 
+DROP FUNCTION IF EXISTS ShopReport;
 DELIMITER //
 CREATE FUNCTION ShopReport(shop_id INT,start_date DATE, end_date DATE) 
 RETURNS TEXT
@@ -59,8 +60,8 @@ BEGIN
     DECLARE total_product INT;
     DECLARE product_access CURSOR FOR 
 		SELECT product_id FROM product p 
-    JOIN shop s ON p.shop_id = s.shop_id 
-    WHERE s.shop_id = shop_id 
+    JOIN shop s ON p.shop_id = s.user_id 
+    WHERE s.user_id = shop_id 
     ORDER BY product_id ASC;
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET DONE = TRUE;
     
@@ -84,13 +85,13 @@ BEGIN
 		END IF;
         SELECT SUM(quantity) INTO product_quantity 
         FROM bill b 
-        JOIN bill_product b_d ON b.bill_id = b_d.product_id 
+        JOIN bill_product b_d ON b.bill_id = b_d.bill_id 
         JOIN product p ON b_d.product_id = p.product_id 
 			WHERE b.shop_id = shop_id 
         AND p.product_id = product_access_id 
         AND b.order_date >= start_date 
         AND b.order_date <= end_date 
-        AND b.bill_status = 'COMPLETE';
+        AND b.bill_status = 1;
       IF product_quantity IS NULL THEN
 			SET product_quantity = 0;
 		END IF;
@@ -102,6 +103,5 @@ BEGIN
 END //
 DELIMITER ;
 
-
-
-SELECT ShopVolume('2023-01-01', '2023-12-10');
+select ShopReport(21,'2023-01-01','2023-12-01');
+select ShopVolume('2023-01-01','2023-12-01');
