@@ -118,4 +118,18 @@ BEGIN
 END //
 DELIMITER ;
 
+drop procedure getBillInfo;
+-- stored procedure to get orders
+DELIMITER //
+create procedure getBillInfo (in shop_id int)
+begin
+  select product_name, quantity, quantity * price as total_price, bill_status
+  from product
+  inner join bill_product on product.product_id = bill_product.product_id
+  inner join bill on bill_product.bill_id = bill.bill_id
+  where bill.shop_id = shop_id;
+end
+DELIMITER ;
+
+
 

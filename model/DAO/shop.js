@@ -75,6 +75,18 @@ const deleteProduct = (product_id, controller) => {
     });
 }
 
+const getOrder = (shop_id, controller) => {
+    const query = `CALL GetBillInfo(${shop_id})`;
+    connect_DB.query(query, (err, result) => {
+        if (err) {
+            console.error(err);
+            controller(err, null);
+        } else { 
+            controller(null, result[0]);
+        }
+    });
+}
+
 module.exports = {
     getUser,
     getShopName,
@@ -82,5 +94,6 @@ module.exports = {
     getAllProducts,
     insertProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getOrder
 }
