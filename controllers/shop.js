@@ -126,6 +126,18 @@ const deleteProduct = (req, res) => {
     })
 }
 
+const getOrder = (req, res) => {
+    let shop_id = req.body.shop_id;
+    shop_model.getOrder(shop_id, function (err, orders) {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.json(orders);
+        }
+    })
+}
+
 module.exports = {
     getUser,
     getShopName,
@@ -133,6 +145,7 @@ module.exports = {
     viewProduct,
     insertProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getOrder
 };
 

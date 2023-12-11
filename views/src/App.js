@@ -16,6 +16,7 @@ import PublicTest from './components/(test_only)public_test/public_test';
 import SignUp from './components/signup/signup';
 import ManageProduct from './components/seller/manageProduct';
 import ManageProfile from './components/seller/manageProfile';
+import ManageOrder  from "./components/seller/manageOrder";
 import ShopPage from './components/customerpage/ShopPage';
 import ProductPage from './components/customerpage/ProductPage';
 import CartPage from './components/customerpage/CartPage';
@@ -35,6 +36,7 @@ function App() {
         </Route>
         <Route path='manageProduct' element={<ManageProduct/>} />
         <Route path='manageProfile' element={<ManageProfile />} />
+        <Route path='manageOrder' element={<ManageOrder />} />
         <Route path='shop' element={<ShopPage />} />
         <Route path='shop/:keyword' element={<ShopPage />} />
         <Route path='product/:id' element={<ProductPage />} />
