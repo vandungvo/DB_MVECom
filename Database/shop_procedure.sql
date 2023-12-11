@@ -1,3 +1,13 @@
+DROP PROCEDURE IF EXISTS GetUser;
+DROP PROCEDURE IF EXISTS GetShopName;
+DROP PROCEDURE IF EXISTS GetAllProducts;
+DROP PROCEDURE IF EXISTS GetCategories;
+DROP PROCEDURE IF EXISTS InsertProduct;
+DROP PROCEDURE IF EXISTS UpdateProduct;
+DROP PROCEDURE IF EXISTS DeleteProduct;
+DROP PROCEDURE IF EXISTS GetBillInfo;
+DROP PROCEDURE IF EXISTS GetRevenue;
+
 -- Stored procedure to get shop information
 DELIMITER //
 CREATE PROCEDURE GetUser(
@@ -113,22 +123,34 @@ CREATE PROCEDURE DeleteProduct(
     IN p_id INT
 )
 BEGIN
-    DELETE FROM product
+    UPDATE product
+    SET  stock = 0
     WHERE product_id = p_id;
 END //
 DELIMITER ;
 
-drop procedure getBillInfo;
 -- stored procedure to get orders
 DELIMITER //
-create procedure getBillInfo (in shop_id int)
-begin
-  select product_name, quantity, quantity * price as total_price, bill_status
-  from product
-  inner join bill_product on product.product_id = bill_product.product_id
-  inner join bill on bill_product.bill_id = bill.bill_id
-  where bill.shop_id = shop_id;
-end
+CREATE PROCEDURE GetBillInfo (IN shop_id INT)
+BEGIN
+  SELECT product_name, quantity, price, quantity * price AS total_price, bill_status
+  FROM product
+  INNER JOIN bill_product ON product.product_id = bill_product.product_id
+  INNER JOIN bill ON bill_product.bill_id = bill.bill_id
+  WHERE bill.shop_id = shop_id;
+END //
+DELIMITER ;
+
+-- stored procedure to get the revenue
+DELIMITER //
+CREATE PROCEDURE GetRevenue (IN shop_id INT)
+BEGIN
+	SELECT sum(quantity * price) as total_price
+	FROM product
+	INNER JOIN bill_product ON product.product_id = bill_product.product_id
+	INNER JOIN bill ON bill_product.bill_id = bill.bill_id
+	WHERE bill.shop_id = shop_id;
+END //
 DELIMITER ;
 
 

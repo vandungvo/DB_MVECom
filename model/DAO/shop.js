@@ -87,6 +87,18 @@ const getOrder = (shop_id, controller) => {
     });
 }
 
+const getRevenue = (shop_id, controller) => {
+    const query = `CALL GetRevenue(${shop_id})`;
+    connect_DB.query(query, (err, result) => {
+        if (err) {
+            console.error(err);
+            controller(err, null);
+        } else { 
+            controller(null, result[0]);
+        }
+    });
+}
+
 module.exports = {
     getUser,
     getShopName,
@@ -95,5 +107,6 @@ module.exports = {
     insertProduct,
     updateProduct,
     deleteProduct,
-    getOrder
+    getOrder,
+    getRevenue
 }

@@ -10,5 +10,6 @@ shop_router.post("/insertProduct", shop_controller.insertProduct);
 shop_router.post("/deleteProduct", shop_controller.deleteProduct);
 shop_router.post("/updateProduct", shop_controller.updateProduct);
 shop_router.post("/getOrder", shop_controller.getOrder);
+shop_router.post("/getRevenue", shop_controller.getRevenue);
 
 module.exports = shop_router;

@@ -8,15 +8,20 @@ import './manageProduct.css';
 
 const cookies = new Cookies();
 const shop_id = cookies.get("USER_ID");
-console.log(shop_id);
+
 function ManageOrder() {
     // view all orders in shop
     const [orders, setOrders] = useState([]);
+    const [revenue, setRevenue] = useState(null);
 
     useEffect(() => {
         axios.post('/api/shop/getOrder', { shop_id })
         .then(response => setOrders(response.data) )
         .catch(error => console.error('Error fetching orders:', error));
+
+        axios.post('/api/shop/getRevenue', { shop_id })
+        .then(response => setRevenue(response.data[0].total_price) )
+        .catch(error => console.error('Error fetching revenue:', error));
     }, []);
 
     return (
@@ -44,6 +49,7 @@ function ManageOrder() {
                     ))}
                 </tbody>
             </table>
+            <h1 className='text-center m-4' style={{color: "black"}}>Revenue: {revenue}</h1>
         </div>
     );
 }

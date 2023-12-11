@@ -138,6 +138,18 @@ const getOrder = (req, res) => {
     })
 }
 
+const getRevenue = (req, res) => {
+    let shop_id = req.body.shop_id;
+    shop_model.getRevenue(shop_id, function (err, revenue) {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.json(revenue);
+        }
+    })
+}
+
 module.exports = {
     getUser,
     getShopName,
@@ -146,6 +158,7 @@ module.exports = {
     insertProduct,
     updateProduct,
     deleteProduct,
-    getOrder
+    getOrder,
+    getRevenue
 };
 
