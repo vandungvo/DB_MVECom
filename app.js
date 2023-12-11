@@ -30,8 +30,6 @@ const cspConfig = {
     },
   };
 
-
-
 var app = express();
 // app.set('view engine', 'ejs');
 app.use(cors());
