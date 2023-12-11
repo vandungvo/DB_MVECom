@@ -29,7 +29,7 @@ const getOrdersByOrderID = async (orderId) => {
 
 const createNewOrder = async (customerId, products) => {
   try {
-    console.log(customerId);
+    console.log(customerId, products);
     await connect_DB.promise().query(
       'CALL CreateNewOrder(?, ?)',
       [customerId, JSON.stringify(products)]

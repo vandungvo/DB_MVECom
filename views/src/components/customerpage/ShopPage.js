@@ -51,6 +51,9 @@ const ShopPage = () => {
               <Dropdown.Item onClick={() => setCategory("")}>
                 None
               </Dropdown.Item>
+              <Dropdown.Item onClick={() => setCategory("Electronics")}>
+                Electronics
+              </Dropdown.Item>
               <Dropdown.Item onClick={() => setCategory("Computers")}>
                 Computers
               </Dropdown.Item>
@@ -70,6 +73,16 @@ const ShopPage = () => {
                 onClick={() => setCategory("Beauty and Personal care")}
               >
                 Beauty and Personal care
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => setCategory("Woman's fashion")}
+              >
+                Woman's fashion
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => setCategory("Men's fashion")}
+              >
+                Men's fashion
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>

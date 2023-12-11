@@ -1,21 +1,5 @@
 use e_commerce;
 
-DROP PROCEDURE IF EXISTS GetShopProductsByCategoryAndMinRating;
-DELIMITER //
-CREATE PROCEDURE GetShopProductsByCategoryAndMinRating(IN categoryName VARCHAR(100), IN minRating DECIMAL(2,1))
-BEGIN
-    SELECT s.shop_name, AVG(p.rating) AS avg_rating, SUM(p.sold_quantities) AS total_sold
-    FROM product p
-    JOIN category c ON p.ctg_id = c.ctg_id
-    JOIN shop s ON p.shop_id = s.user_id
-    WHERE c.name = categoryName
-    GROUP BY s.shop_name
-    HAVING avg_rating > minRating
-    ORDER BY total_sold DESC;
-END //
-DELIMITER ;
-
-
 DROP PROCEDURE IF EXISTS GetProducts;
 DELIMITER //
 CREATE PROCEDURE GetProducts(IN keyword VARCHAR(1000), IN category VARCHAR(100), IN sortOption VARCHAR(100), IN offset INT, IN lim INT)

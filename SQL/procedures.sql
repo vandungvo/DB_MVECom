@@ -24,6 +24,7 @@ END //
 DELIMITER ;
 
 DELIMITER //
+DROP PROCEDURE IF EXISTS GetOrderHistory;
 CREATE PROCEDURE GetOrderHistory(user_id INT,start_date DATE, end_date DATE)
 BEGIN
     DECLARE no_rows CONDITION FOR SQLSTATE '02000';
@@ -41,7 +42,7 @@ BEGIN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Invalid input date, end_date can not greater than start_date';
 	END IF;
     SELECT 
-        p.name,
+        p.product_name,
         s.shop_name,
         b_d.quantity,
         b.total_price,
@@ -50,6 +51,7 @@ BEGIN
     FROM customer c 
     JOIN orders o ON c.user_id = o.cus_id
     JOIN bill b ON   o.order_id = b.order_id
+    JOIN shop s ON s.user_id = b.shop_id
     JOIN bill_product b_d ON b.bill_id = b_d.bill_id 
     JOIN product p ON b_d.product_id = p.product_id
     JOIN category ctg on p.ctg_id = ctg.ctg_id 
@@ -59,6 +61,7 @@ BEGIN
 END //
 DELIMITER ; 
 
+call GetOrderHistory(2, '2023-01-02', '2023-12-10')
 
 -- DELIMITER //
 -- CREATE PROCEDURE GetShopProductsByCategoryAndMinRating(IN categoryName VARCHAR(100), IN minRating DECIMAL(2,1))

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 DROP PROCEDURE IF EXISTS GetUser;
 DROP PROCEDURE IF EXISTS GetShopName;
 DROP PROCEDURE IF EXISTS GetAllProducts;
@@ -7,8 +8,12 @@ DROP PROCEDURE IF EXISTS UpdateProduct;
 DROP PROCEDURE IF EXISTS DeleteProduct;
 DROP PROCEDURE IF EXISTS GetBillInfo;
 DROP PROCEDURE IF EXISTS GetRevenue;
+=======
+use e_commerce;
+>>>>>>> 8807ff279ded13a10c760e0d86b6532661de1655
 
 -- Stored procedure to get shop information
+DROP PROCEDURE IF EXISTS GetUser;
 DELIMITER //
 CREATE PROCEDURE GetUser(
 	IN id INT
@@ -20,7 +25,9 @@ BEGIN
 END //
 DELIMITER;
 
+
 -- Stored procedure to get name of shop
+DROP PROCEDURE IF EXISTS GetShopName;
 DELIMITER //
 CREATE PROCEDURE GetShopName(
     IN id INT
@@ -32,6 +39,7 @@ BEGIN
 END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS GetAllProducts;
 -- Stored procedure to get all products in a shop
 DELIMITER //
 CREATE PROCEDURE GetAllProducts(
@@ -45,6 +53,7 @@ BEGIN
 END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS GetCategories;
 -- Stored procedure to get all catergories
 DELIMITER //
 CREATE PROCEDURE GetCategories()
@@ -53,7 +62,7 @@ BEGIN
 END //
 DELIMITER ;
 
-
+DROP PROCEDURE IF EXISTS InsertProduct;
 -- Stored procedure to add a new product
 DELIMITER //
 CREATE PROCEDURE InsertProduct(
@@ -84,7 +93,7 @@ BEGIN
 END //
 DELIMITER ;
 
-
+DROP PROCEDURE IF EXISTS UpdateProduct;
 -- stored procedure to update product
 DELIMITER //
 CREATE PROCEDURE UpdateProduct(
@@ -117,6 +126,7 @@ BEGIN
 END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS DeleteProduct;
 -- stored procedure to delete a product
 DELIMITER //
 CREATE PROCEDURE DeleteProduct(

@@ -9,9 +9,14 @@ import {
   Card,
 } from "react-bootstrap";
 import { FaTrash } from "react-icons/fa";
-import { addToCart, removeFromCart } from "../../slices/cartSlice";
+import { addToCart, removeFromCart, clearCartItems } from "../../slices/cartSlice";
 import Alert from "react-bootstrap/Alert";
 import axios from "axios";
+import Cookies from 'universal-cookie';
+
+
+const cookies = new Cookies();
+const user_id = cookies.get("USER_ID") || null;
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -30,12 +35,11 @@ const CartPage = () => {
 
   const checkoutHandler = async (customerId, products) => {
     try {
-      console.log(cartItems);
       const response = await axios.post('http://localhost:8080/api/orders', {
-        customerId: 2,
+        customerId: user_id,
         products: cartItems
       });
-      console.log(response.data);
+      dispatch(clearCartItems());
       navigate("/profile");
     } catch (error) {
       console.error('An error occurred while checking out:', error);
